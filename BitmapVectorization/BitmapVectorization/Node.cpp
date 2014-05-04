@@ -1,39 +1,44 @@
 #include "Node.h"
-#include <iostream>
-
 
 Node::Node(void) {}
 
 Node::~Node(void) {}
 
+/**
+ * TODO
+ * Check if this node is similar to another
+ */
 bool Node::isSimilar( const Node& otherNode )
 {
 	return false;
 }
 
-void Node::addNode( const Node& nodeToAdd )
+/**
+ * Add a node to this node
+ */
+void Node::addNode( Node* nodeToAdd )
 {
 	if ( neighbors.size() < MAX_NODES )
-	{
 		neighbors.push_back( nodeToAdd );
-		cout << "NODE ADDED" << endl;
-	}
 }
 
+/**
+ * Remove a node from this node
+ */
 void Node::removeNode( const Node& nodeToRemove )
 {
-	/*
-	vector<Node>::iterator iterator;
-	iterator = find( 
-		neighbors.begin(), 
-		neighbors.end(),
-		nodeToRemove
-		);
-	
-	if ( iterator != neighbors.end() )
+	// Search through all nodes 
+	for ( int i = 0; i < neighbors.size(); ++i )
 	{
-		neighbors.erase( iterator );
-		cout << "NODE REMOVED" << endl;
+		Node* n = neighbors[i];
+
+		// If the node currently being checked has the
+		// same memory address as the nodeToRemove,
+		// remove it from our list of nodes.
+		if ( n == &nodeToRemove )
+		{
+			neighbors.erase( neighbors.begin() + i );
+			break;
+		}
 	}
-	*/
 }

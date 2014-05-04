@@ -12,11 +12,11 @@ public:
 	~Node( void );
 
 	bool isSimilar( const Node& );
-	void addNode( const Node& );
+	void addNode( Node* );
 	void removeNode( const Node& );
 
 private:
-	vector<Node> neighbors;
+	vector<Node*> neighbors;
 	Color color;
 	int valence;
 
