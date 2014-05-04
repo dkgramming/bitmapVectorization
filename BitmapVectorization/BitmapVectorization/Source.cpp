@@ -1,6 +1,11 @@
 #include <iostream>
+#include "Node.h"
 
 int main()
 {
-    std::cout << "Hello" << std::endl;
+	Node n;
+
+	Node m;
+	n.addNode(m);
+	n.removeNode(m);
 }
