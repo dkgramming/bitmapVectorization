@@ -1,9 +1,9 @@
 #include "Graph.h"
 
-Graph::Graph( int numRows, int numColumns )
+Graph::Graph( int a_numRows, int a_numColumns )
 {
-	this->numRows = numRows;
-	this->numColumns = numColumns;
+	numRows = a_numRows;
+	numColumns = a_numColumns;
 
 	// Create all the nodes for the graph,
 	// starting by creating all the rows
@@ -11,7 +11,9 @@ Graph::Graph( int numRows, int numColumns )
 
 	// Create the columns for each row
 	for ( int i = 0; i < numRows; ++i )
+	{
 		nodes[i] = new Node[numColumns];
+	}
 }
 
 
@@ -19,7 +21,9 @@ Graph::~Graph(void)
 {
 	// Delete each column
 	for ( int i = 0; i < numRows; ++i )
+	{
 		delete[] nodes[i];
+	}
 
 	// Delete all the rows
 	delete[] nodes;
