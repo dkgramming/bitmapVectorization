@@ -5,7 +5,7 @@ Node::Node(void) {}
 Node::~Node(void) {}
 
 /**
- * TODO
+ * @TODO
  * Check if this node is similar to another
  */
 bool Node::isSimilar( const Node& otherNode )
@@ -19,7 +19,9 @@ bool Node::isSimilar( const Node& otherNode )
 void Node::addNode( Node* nodeToAdd )
 {
 	if ( neighbors.size() < MAX_NODES )
+	{
 		neighbors.push_back( nodeToAdd );
+	}
 }
 
 /**
@@ -30,12 +32,12 @@ void Node::removeNode( const Node& nodeToRemove )
 	// Search through all nodes 
 	for ( int i = 0; i < neighbors.size(); ++i )
 	{
-		Node* n = neighbors[i];
+		Node* pCurrentNeighbor = neighbors[i];
 
 		// If the node currently being checked has the
 		// same memory address as the nodeToRemove,
 		// remove it from our list of nodes.
-		if ( n == &nodeToRemove )
+		if ( pCurrentNeighbor == &nodeToRemove )
 		{
 			neighbors.erase( neighbors.begin() + i );
 			break;
