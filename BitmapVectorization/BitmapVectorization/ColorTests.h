@@ -18,12 +18,12 @@ void testGetR()
 	// Test for 102
 	color.setYUV( .369f, .229f, .027f );
 	bool isOneOTwo = color.getR() == 102;
-	std::cout << "R = " << color.getR() << std::endl;
 	assert( isOneOTwo );
 
 	// Test for 255
-	color.setYUV( 1.0f, 1.0f, 1.0f );
+	color.setYUV( 1.0f, 0.0f, 0.0f );
 	bool isTwoFiddyFie = color.getR() == 255;
+	std::cout << "R = " << color.getR() << std::endl;
 	assert( isTwoFiddyFie );
 }
 

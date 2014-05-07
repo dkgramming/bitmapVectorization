@@ -3,23 +3,22 @@
 class Color
 {
 public:
-	Color(void);
+	Color( void );
 	Color( float, float, float );
-	Color( unsigned int, unsigned int, unsigned int );
-	~Color(void);
+	~Color( void );
 
-	unsigned int getY() const;
-	unsigned int getU() const;
-	unsigned int getV() const;
+	float getY() const;
+	float getU() const;
+	float getV() const;
 
 	unsigned int getR() const;
 	unsigned int getG() const;
 	unsigned int getB() const;
 	
-	void setY( unsigned int );
-	void setU( unsigned int );
-	void setV( unsigned int );
-	void setYUV( unsigned int, unsigned int, unsigned int );
+	void setY( float );
+	void setU( float );
+	void setV( float );
+	void setYUV( float, float, float );
 
 private:
 	float y;
