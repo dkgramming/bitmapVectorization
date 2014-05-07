@@ -6,7 +6,7 @@ Node::~Node(void) {}
 
 /**
  * @TODO
- * Check if this node is similar to another
+ * Check if this node has similar YUV values to another
  */
 bool Node::isSimilar( const Node& otherNode )
 {
@@ -30,7 +30,7 @@ void Node::addNode( Node* nodeToAdd )
 void Node::removeNode( const Node& nodeToRemove )
 {
 	// Search through all nodes 
-	for ( int i = 0; i < neighbors.size(); ++i )
+	for ( unsigned int i = 0; i < neighbors.size(); ++i )
 	{
 		Node* pCurrentNeighbor = neighbors[i];
 

@@ -20,6 +20,10 @@ private:
 	Color color;
 	int valence;
 
+	static const unsigned int MAX_DELTA_Y = 48;
+	static const unsigned int MAX_DELTA_U = 7;
+	static const unsigned int MAX_DELTA_V = 6;
+
 	static const int MAX_NODES = 8;
 };
 

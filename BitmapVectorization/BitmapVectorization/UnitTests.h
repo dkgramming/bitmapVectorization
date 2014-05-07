@@ -6,8 +6,10 @@
 #pragma once
 
 #include "NodeTests.h"
+#include "ColorTests.h"
 
 void runAllTests()
 {
+	runColorTests();
 	runNodeTests();
 }

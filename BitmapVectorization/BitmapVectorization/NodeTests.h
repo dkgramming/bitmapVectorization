@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <iostream>
 
 #include "Node.h"
 
@@ -35,4 +36,5 @@ void runNodeTests()
 	testIsSimilar();
 	testAddNode();
 	testRemoveNode();
+	std::cout << "Node Tests Passed!" << std::endl;
 }
