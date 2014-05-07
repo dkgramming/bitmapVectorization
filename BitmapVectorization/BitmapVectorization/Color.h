@@ -11,9 +11,9 @@ public:
 	float getU() const;
 	float getV() const;
 
-	unsigned int getR() const;
-	unsigned int getG() const;
-	unsigned int getB() const;
+	float getR() const;
+	float getG() const;
+	float getB() const;
 	
 	void setY( float );
 	void setU( float );
