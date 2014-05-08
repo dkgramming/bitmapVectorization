@@ -14,9 +14,9 @@ bool Node::isSimilar( const Node& otherNode )
 	float deltaU = this->color.getU() - otherNode.color.getU();
 	float deltaV = this->color.getV() - otherNode.color.getV();
 
-	bool yIsSimilar = deltaY <= (float)MAX_DELTA_Y/(float)DELTA_DENOMINATOR;
-	bool uIsSimilar = deltaU <= (float)MAX_DELTA_U/(float)DELTA_DENOMINATOR;
-	bool vIsSimilar = deltaV <= (float)MAX_DELTA_V/(float)DELTA_DENOMINATOR;
+	bool yIsSimilar = deltaY <= maxDeltaY();
+	bool uIsSimilar = deltaU <= maxDeltaU();
+	bool vIsSimilar = deltaV <= maxDeltaV();
 
 	return ( yIsSimilar && uIsSimilar && vIsSimilar );
 }
@@ -51,4 +51,28 @@ void Node::removeNode( const Node& nodeToRemove )
 			break;
 		}
 	}
+}
+
+/**
+ * Provides float constant representing the maximum delta Y value
+ */
+const float Node::maxDeltaY() const
+{
+	return 48/255;
+}
+
+/**
+ * Provides float constant representing the maximum delta U value
+ */
+const float Node::maxDeltaU() const
+{
+	return 7/255;
+}
+
+/**
+ * Provides float constant representing the maximum delta V value
+ */
+const float Node::maxDeltaV() const
+{
+	return 6/25;
 }

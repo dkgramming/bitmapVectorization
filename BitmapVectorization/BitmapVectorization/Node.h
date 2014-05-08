@@ -15,16 +15,14 @@ public:
 	bool isSimilar( const Node& );
 	void addNode( Node* );
 	void removeNode( const Node& );
+	const float maxDeltaY() const;
+	const float maxDeltaU() const;
+	const float maxDeltaV() const;
 
 private:
 	vector<Node*> neighbors;
 	Color color;
 	int valence;
-
-	static const unsigned int MAX_DELTA_Y = 48;
-	static const unsigned int MAX_DELTA_U = 7;
-	static const unsigned int MAX_DELTA_V = 6;
-	static const unsigned int DELTA_DENOMINATOR = 255;
 
 	static const int MAX_NODES = 8;
 };
