@@ -56,7 +56,7 @@ void Node::removeNode( const Node& nodeToRemove )
 /**
  * Provides float constant representing the maximum delta Y value
  */
-const float Node::maxDeltaY() const
+const float Node::maxDeltaY()
 {
 	return 48/255;
 }
@@ -64,7 +64,7 @@ const float Node::maxDeltaY() const
 /**
  * Provides float constant representing the maximum delta U value
  */
-const float Node::maxDeltaU() const
+const float Node::maxDeltaU() 
 {
 	return 7/255;
 }
@@ -72,7 +72,12 @@ const float Node::maxDeltaU() const
 /**
  * Provides float constant representing the maximum delta V value
  */
-const float Node::maxDeltaV() const
+const float Node::maxDeltaV() 
 {
 	return 6/25;
+}
+
+Color Node::getColor() const
+{
+	return color;
 }

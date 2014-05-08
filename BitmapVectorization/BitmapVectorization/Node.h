@@ -15,9 +15,10 @@ public:
 	bool isSimilar( const Node& );
 	void addNode( Node* );
 	void removeNode( const Node& );
-	const float maxDeltaY() const;
-	const float maxDeltaU() const;
-	const float maxDeltaV() const;
+	static const float maxDeltaY();
+	static const float maxDeltaU();
+	static const float maxDeltaV();
+	Color getColor() const;
 
 private:
 	vector<Node*> neighbors;

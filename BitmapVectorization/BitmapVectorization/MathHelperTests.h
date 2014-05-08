@@ -7,8 +7,8 @@
 void testAlmostEquals()
 {
 	// Test really close number round-off errors
-    float d1 = 0.2;
-    float d2 = 1 / std::sqrt( 5 ) / std::sqrt( 5 );
+    float d1 = 0.2f;
+    float d2 = (float)( 1 / std::sqrt( 5 ) / std::sqrt( 5 ) );
 	assert( almostEquals( d1, d2 ) );
 
 	// Test one decimal point off
