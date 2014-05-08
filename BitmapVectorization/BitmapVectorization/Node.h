@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Color.h"
 #include <vector>
+
+#include "Color.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ private:
 	static const unsigned int MAX_DELTA_Y = 48;
 	static const unsigned int MAX_DELTA_U = 7;
 	static const unsigned int MAX_DELTA_V = 6;
+	static const unsigned int DELTA_DENOMINATOR = 255;
 
 	static const int MAX_NODES = 8;
 };

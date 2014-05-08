@@ -10,7 +10,15 @@ Node::~Node(void) {}
  */
 bool Node::isSimilar( const Node& otherNode )
 {
-	return false;
+	float deltaY = this->color.getY() - otherNode.color.getY();
+	float deltaU = this->color.getU() - otherNode.color.getU();
+	float deltaV = this->color.getV() - otherNode.color.getV();
+
+	bool yIsSimilar = deltaY <= (float)MAX_DELTA_Y/(float)DELTA_DENOMINATOR;
+	bool uIsSimilar = deltaU <= (float)MAX_DELTA_U/(float)DELTA_DENOMINATOR;
+	bool vIsSimilar = deltaV <= (float)MAX_DELTA_V/(float)DELTA_DENOMINATOR;
+
+	return ( yIsSimilar && uIsSimilar && vIsSimilar );
 }
 
 /**

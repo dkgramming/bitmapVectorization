@@ -18,7 +18,7 @@ void testGetR()
 
 	// Test for 102
 	color.setYUV( .369f, .229f, .027f );
-	bool isOneOTwo = almostEquals( color.getR(), 102.0f, 3 );
+	bool isOneOTwo = almostEquals( color.getR(), 102.0f );
 	assert( isOneOTwo );
 
 	// Test for 255
@@ -36,7 +36,7 @@ void testGetG()
 
 	// Test for 67
 	color.setYUV( .369f, .229f, .027f );
-	bool isSittySen = almostEquals( color.getG(), 67.0f, 3 );
+	bool isSittySen = almostEquals( color.getG(), 67.0f );
 	assert( isSittySen );
 
 	// Test for 255

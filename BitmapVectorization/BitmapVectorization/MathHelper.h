@@ -1,14 +1,14 @@
 #pragma once
 
-#include <limits>
 #include <cmath>
-#include <algorithm>
+#include <iostream>
 
 using namespace std;
 
-bool almostEquals( float lValue, float rValue, int decimalPointPrecision )
+bool almostEquals( float lValue, float rValue )
 {
-	return abs( lValue - rValue ) <= numeric_limits<float>::epsilon() *
-									 max( abs( lValue ), abs( rValue ) ) *
-									 decimalPointPrecision;
+	float difference = abs( lValue - rValue );
+	const float TOLERANCE = 0.1f;
+
+	return ( difference <= TOLERANCE );
 }
