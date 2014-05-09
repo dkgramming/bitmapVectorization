@@ -40,7 +40,6 @@ float Color::getB() const
 	float b = MAX_RGB_VALUE * ( y + u / 0.492f );
 	b = ( b > MAX_RGB_VALUE ) ? MAX_RGB_VALUE : b;
 	return b;
-
 }
 
 void Color::setY( float a_y )

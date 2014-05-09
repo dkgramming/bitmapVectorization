@@ -41,14 +41,49 @@ void testIsSimilar()
 
 void testAddNode()
 {
-	//@TODO: Write test
-	//assert( false );
+	// So we have two Nodes
+	Node nodeA;
+	Node nodeB;
+
+	// Node A has 0 neighbors... for now
+	int initialNeighborCount = nodeA.getNeighborCount();
+
+	// Add a Node to Node A and see if the change in neighbors equals 1
+	nodeA.addNode( &nodeB );
+	bool addedNode = ( nodeA.getNeighborCount() - initialNeighborCount ) == 1;
+	assert( addedNode );
+
+	// Now add the Hot Spice 15(TM) to Node A
+	// Total neighbors should not exceed 8 (max)
+	for( int i = 0; i < 15; ++i )
+	{
+		nodeA.addNode( &Node() );
+	}
+	bool noMoreThanEight = nodeA.getNeighborCount() == 8;
+	assert( noMoreThanEight );
 }
 
 void testRemoveNode()
 {
-	//@TODO: Write test
-	//assert( false );
+	// Node babies = 2
+	Node nodeA;
+	Node nodeB;
+
+	// Add Node B to Node A
+	nodeA.addNode( &nodeB );
+	int neighborCountAfterAdd = nodeA.getNeighborCount();
+
+	// Remove Node B from Node A
+	// Now Node A should have no nodes
+	nodeA.removeNode( nodeB );
+	bool noNeighborsThere = ( nodeA.getNeighborCount() - neighborCountAfterAdd ) == -1;
+	assert( noNeighborsThere );
+
+	// Now try removing Node B again (it's not Node A's neighbor)
+	int neighborCountAfterRemoval = nodeA.getNeighborCount();
+	nodeA.removeNode( nodeB );
+	bool noEffectFromInvalidRemoval = ( nodeA.getNeighborCount() - neighborCountAfterRemoval ) == 0;
+	assert( noEffectFromInvalidRemoval );
 }
 
 void runNodeTests()

@@ -5,7 +5,6 @@ Node::Node(void) {}
 Node::~Node(void) {}
 
 /**
- * @TODO
  * Check if this node has similar YUV values to another
  */
 bool Node::isSimilar( const Node& otherNode )
@@ -58,7 +57,7 @@ void Node::removeNode( const Node& nodeToRemove )
  */
 const float Node::maxDeltaY()
 {
-	return 48/255;
+	return 48 / (float)255;
 }
 
 /**
@@ -66,7 +65,7 @@ const float Node::maxDeltaY()
  */
 const float Node::maxDeltaU() 
 {
-	return 7/255;
+	return 7 / (float)255;
 }
 
 /**
@@ -74,10 +73,29 @@ const float Node::maxDeltaU()
  */
 const float Node::maxDeltaV() 
 {
-	return 6/25;
+	return 6 / (float)255;
 }
 
+/**
+ * Gets the total amount of neighbors for this Node
+ */
+int Node::getNeighborCount() const
+{
+	return neighbors.size();
+}
+
+/**
+ * Gets the Color of this Node
+ */
 Color Node::getColor() const
 {
 	return color;
+}
+
+/**
+ * Set the Color of this Node
+ */
+void Node::setColor( Color newColor )
+{
+	color = newColor;
 }

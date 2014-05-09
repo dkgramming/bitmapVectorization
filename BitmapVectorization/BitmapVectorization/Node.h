@@ -18,7 +18,10 @@ public:
 	static const float maxDeltaY();
 	static const float maxDeltaU();
 	static const float maxDeltaV();
+
+	int getNeighborCount() const;
 	Color getColor() const;
+	void setColor( Color );
 
 private:
 	vector<Node*> neighbors;
