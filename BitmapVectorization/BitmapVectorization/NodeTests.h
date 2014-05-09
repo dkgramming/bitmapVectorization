@@ -37,6 +37,18 @@ void testIsSimilar()
 	// Check if the two nodes are similar
 	bool nodesAtThresholdSimilar = nodeA.isSimilar( nodeB );
 	assert( nodesAtThresholdSimilar );
+
+	// Let's test whether the absolute value conversion is working
+	nodeA.getColor().setYUV( 0, 0, 0 );
+	nodeB.getColor().setYUV( Node::maxDeltaY() + 1 / 255,
+							 Node::maxDeltaU() + 1 / 255,
+							 Node::maxDeltaV() + 1 / 255 );
+
+	// These nodes shouldn't be similar,
+	// even though the original delta values are less than the maxes
+	// (because they're negative)
+	bool nodesNotSimilar = nodeA.isSimilar( nodeB );
+	assert( nodesNotSimilar );
 }
 
 void testAddNode()

@@ -13,6 +13,19 @@ bool Node::isSimilar( const Node& otherNode )
 	float deltaU = this->color.getU() - otherNode.color.getU();
 	float deltaV = this->color.getV() - otherNode.color.getV();
 
+	if( deltaY < 0 )
+	{
+		deltaY *= -1;
+	}
+	if( deltaU < 0 )
+	{
+		deltaU *= -1;
+	}
+	if( deltaV < 0 )
+	{
+		deltaV *= -1;
+	}
+
 	bool yIsSimilar = deltaY <= maxDeltaY();
 	bool uIsSimilar = deltaU <= maxDeltaU();
 	bool vIsSimilar = deltaV <= maxDeltaV();

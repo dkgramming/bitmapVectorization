@@ -45,9 +45,28 @@ void testGetG()
 	assert( isTwoFiddyFie );
 }
 
+void testGetB()
+{
+	// Test for 0
+	Color color( 0.0f, 0.0f, 0.0f );
+	bool isZero = ( color.getB() == 0 );
+	assert( isZero );
+
+	// Test for 213
+	color.setYUV( .369f, .229f, .027f );
+	bool isTooTirteen = almostEquals( color.getB(), 213.0f );
+	assert( isTooTirteen );
+
+	// Test for 255
+	color.setYUV( 1.0f, 0.0f, 0.0f );
+	bool isTwoFiddyFie = ( color.getB() == 255 );
+	assert( isTwoFiddyFie );
+}
+
 void runColorTests()
 {
 	testGetR();
 	testGetG();
+	testGetB();
 	std::cout << "Color tests Passed!" << std::endl;
 }
