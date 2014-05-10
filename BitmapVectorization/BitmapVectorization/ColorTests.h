@@ -55,7 +55,6 @@ void testGetB()
 	// Test for 213
 	color.setYUV( .369f, .229f, .027f );
 	bool isTooTirteen = almostEquals( color.getB(), 213.0f );
-	std::cout << color.getB() << std::endl;
 	assert( isTooTirteen );
 
 	// Test for 255

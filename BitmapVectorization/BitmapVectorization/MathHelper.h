@@ -8,7 +8,10 @@ using namespace std;
 bool almostEquals( float lValue, float rValue )
 {
 	float difference = abs( lValue - rValue );
-	const float TOLERANCE = 0.1f;
+	float mean = ( lValue + rValue ) * 0.5f;
+	float tolerance = ceil( mean * 0.01f ) / ( mean * mean );
+
+	float TOLERANCE = 0.5f;
 
 	return ( difference <= TOLERANCE );
 }
