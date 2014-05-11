@@ -3,6 +3,7 @@
 #include "Node.h"
 #include "Graph.h"
 #include "UnitTests.h"
+#include "ImageLoader.h"
 
 int main()
 {
@@ -16,4 +17,7 @@ int main()
 
 	// The main should be used for unit tests
 	runAllTests();
+
+	ImageLoader i;
+	i.loadImage( "Images/test1.raw", 4, 6 );
 }

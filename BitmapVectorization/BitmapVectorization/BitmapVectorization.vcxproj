@@ -80,17 +80,21 @@
   <ItemGroup>
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="RawImage.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
     <ClInclude Include="ColorTests.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="MathHelperTests.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeTests.h" />
+    <ClInclude Include="RawImage.h" />
     <ClInclude Include="UnitTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
