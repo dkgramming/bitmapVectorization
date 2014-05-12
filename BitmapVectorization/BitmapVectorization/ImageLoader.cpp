@@ -14,9 +14,9 @@ ImageLoader::~ImageLoader(void)
 {
 }
 
-RawImage ImageLoader::loadImage( char* path, int width, int height )
+RawImage ImageLoader::loadImage( char* a_path, int a_width, int a_height )
 {
-	ifstream fileIn( path, ios::binary );
+	ifstream fileIn( a_path, ios::binary );
 
 	if ( fileIn.is_open() )
 	{
@@ -30,7 +30,7 @@ RawImage ImageLoader::loadImage( char* path, int width, int height )
 
 		fileContents[ length ] = 0;
 
-		RawImage image = parseRawData( fileContents, width, height );
+		RawImage image = parseRawData( fileContents, a_width, a_height );
 		return image;
 
 		delete[] fileContents;
@@ -40,15 +40,16 @@ RawImage ImageLoader::loadImage( char* path, int width, int height )
 	return i;
 }
 
-RawImage ImageLoader::parseRawData( char* data, int width, int height )
+RawImage ImageLoader::parseRawData( char* data, int a_width, int a_height )
 {
-	RawImage image( width, height );
-	
-	for( int i = 0; i < width * height * 3; i += 3 )
+	RawImage image( a_width, a_height );
+	const unsigned int TOTAL_COLOR_CHANNELS = a_width * a_height * 3;
+
+	for( int index = 0; index < TOTAL_COLOR_CHANNELS; index += 3 )
 	{
-		int r = ( data[ i ] + 256 ) % 256;
-		int g = ( data[ i + 1 ] + 256 ) % 256;
-		int b = ( data[ i + 2 ] + 256 ) % 256;
+		int r = ( data[ index ] + 256 ) % 256;
+		int g = ( data[ index + 1 ] + 256 ) % 256;
+		int b = ( data[ index + 2 ] + 256 ) % 256;
 
 		cout << r << " " << g << " " << b << endl;
 	}
