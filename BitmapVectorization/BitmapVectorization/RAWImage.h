@@ -12,7 +12,7 @@ public:
 	void setPixel( int, int, Color );
 
 private:
-	Color* pixelData;
+	Color* pPixelData;
 	int width;
 	int height;
 };

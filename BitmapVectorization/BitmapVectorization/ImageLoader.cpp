@@ -25,15 +25,15 @@ RawImage* ImageLoader::loadImage( char* a_path, int a_width, int a_height )
 
 		fileIn.seekg( 0, ios::beg );
 
-		char* fileContents = new char[ length + 1 ];
-		fileIn.read( fileContents, length );
+		char* pFileContents = new char[ length + 1 ];
+		fileIn.read( pFileContents, length );
 
-		fileContents[ length ] = 0;
+		pFileContents[ length ] = 0;
 
-		RawImage* pImage = parseRawData( fileContents, a_width, a_height );
+		RawImage* pImage = parseRawData( pFileContents, a_width, a_height );
 		return pImage;
 
-		delete[] fileContents;
+		delete[] pFileContents;
 	}
 
 	RawImage* pDefaultImage = new RawImage( 0, 0 );

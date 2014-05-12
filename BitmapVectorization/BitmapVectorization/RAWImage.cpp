@@ -5,24 +5,24 @@ RawImage::RawImage( int a_width, int a_height )
 	width = a_width;
 	height = a_height;
 
-	pixelData = new Color[ a_width * a_height ];
+	pPixelData = new Color[ a_width * a_height ];
 }
 
 
 RawImage::~RawImage(void)
 {
-	delete[] pixelData;
+	delete[] pPixelData;
 }
 
 Color* RawImage::getPixelData() const
 {
-	return pixelData;
+	return pPixelData;
 }
 
-void RawImage::setPixel( int x, int y, Color pixelColor )
+void RawImage::setPixel( int a_x, int a_y, Color pixelColor )
 {
-	if ( x + ( y * width ) < width * height )
+	if ( a_x + ( a_y * width ) < width * height )
 	{
-		pixelData[ x + ( y * width ) ] = pixelColor;
+		pPixelData[ a_x + ( a_y * width ) ] = pixelColor;
 	}
 }
