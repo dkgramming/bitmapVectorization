@@ -12,7 +12,6 @@
 
 int main()
 {
-	// The main should be used for unit tests
 	runAllTests();
 
 	ImageLoader loader;

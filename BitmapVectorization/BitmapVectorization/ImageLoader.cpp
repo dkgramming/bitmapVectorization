@@ -32,7 +32,10 @@ RawImage* ImageLoader::loadImage( char* a_path, int a_width, int a_height )
 
 		pFileContents[ length ] = 0;
 
+		// Must delete default image before reassigning 
+		delete pImage;
 		pImage = parseRawData( pFileContents, a_width, a_height );
+
 		delete[] pFileContents;
 	}
 
