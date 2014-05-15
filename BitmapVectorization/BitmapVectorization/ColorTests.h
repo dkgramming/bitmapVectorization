@@ -65,10 +65,14 @@ void testGetB()
 
 void testSetYUV()
 {
-	float y = u = v = 0.0f;
+	float y = 0.0f;
+	float u = 0.0f;
+	float v = 0.0f;
 	Color testColor( y, u, v );
 
-	int r = g = b = 0;
+	int r = 0;
+	int g = 0;
+	int b = 0;
 	testColor.setYUV( r, g, b );
 
 	bool yIsZero = ( testColor.getY() == 0.0f );

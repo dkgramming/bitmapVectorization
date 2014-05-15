@@ -25,14 +25,14 @@ void testSetPixel()
 	loader.loadImage( "Images/test1.raw", 4, 6, image );
 
 	// Loop through the pixel data to ensure that it's been modified
-	const Color** testPixelData = image.getPixelData();
+	Color** testPixelData = image.getPixelData();
 
 	auto pixelCount = ( image.getWidth() * image.getHeight() );
-	for( auto index = 0u; index < pixelCount; ++index )
+	for( auto index = 0; index < pixelCount; ++index )
 	{
-		auto y = testPixelData[ index ].getY();
-		auto u = testPixelData[ index ].getU();
-		auto v = testPixelData[ index ].getV();
+		auto y = testPixelData[ index ]->getY();
+		auto u = testPixelData[ index ]->getU();
+		auto v = testPixelData[ index ]->getV();
 
 		bool notAllZero = !( y == 0.0f && u == 0.0f && v == 0.0f );
 
