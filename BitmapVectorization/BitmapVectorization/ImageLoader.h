@@ -8,7 +8,7 @@ public:
 	ImageLoader(void);
 	~ImageLoader(void);
 
-	RawImage* loadImage( char*, int, int );
-	RawImage* parseRawData( char*, int, int );
+	bool loadImage( char*, int, int, RawImage& );
+	void parseRawData( char*, RawImage& );
 };
 

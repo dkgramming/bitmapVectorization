@@ -68,5 +68,5 @@ void runColorTests()
 	testGetR();
 	testGetG();
 	testGetB();
-	std::cout << "Color tests Passed!" << std::endl;
+	std::cout << "Color tests passed!" << std::endl;
 }

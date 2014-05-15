@@ -14,10 +14,8 @@ ImageLoader::~ImageLoader(void)
 {
 }
 
-RawImage* ImageLoader::loadImage( char* a_path, int a_width, int a_height )
+bool ImageLoader::loadImage( char* a_path, int a_width, int a_height, RawImage& a_image )
 {
-	RawImage* pImage = new RawImage( 0, 0 );
-
 	ifstream fileIn( a_path, ios::binary );
 
 	if ( fileIn.is_open() )
@@ -32,22 +30,25 @@ RawImage* ImageLoader::loadImage( char* a_path, int a_width, int a_height )
 
 		pFileContents[ length ] = 0;
 
-		// Must delete default image before reassigning 
-		delete pImage;
-		pImage = parseRawData( pFileContents, a_width, a_height );
+		parseRawData( pFileContents, a_image );
 
 		delete[] pFileContents;
+
+		return true;
 	}
 
-	return pImage;
+	return false;
+
 }
 
-RawImage* ImageLoader::parseRawData( char* a_pData, int a_width, int a_height )
+void ImageLoader::parseRawData( char* a_pData, RawImage& a_image )
 {
-	RawImage* pImage = new RawImage( a_width, a_height );
-	const unsigned int TOTAL_COLOR_CHANNELS = a_width * a_height * 3;
+	int width = a_image.getWidth();
+	int height = a_image.getHeight();
 
-	for( int index = 0; index < TOTAL_COLOR_CHANNELS; index += 3 )
+	const unsigned int TOTAL_COLOR_CHANNELS = width * height * 3;
+
+	for( unsigned int index = 0; index < TOTAL_COLOR_CHANNELS; index += 3 )
 	{
 		// Arithmetic voodoo
 		// @TODO: Figure out why this works
@@ -55,7 +56,5 @@ RawImage* ImageLoader::parseRawData( char* a_pData, int a_width, int a_height )
 		int g = ( a_pData[ index + 1 ] + 256 ) % 256;
 		int b = ( a_pData[ index + 2 ] + 256 ) % 256;
 	}
-
-	return pImage;
 }
 

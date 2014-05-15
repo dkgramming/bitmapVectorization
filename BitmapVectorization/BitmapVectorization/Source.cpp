@@ -14,10 +14,6 @@ int main()
 {
 	runAllTests();
 
-	ImageLoader loader;
-	RawImage* pImage = loader.loadImage( "Images/test1.raw", 4, 6 );
-	delete pImage;
-
 	// Dump that memory leak data
 	_CrtDumpMemoryLeaks();
 }

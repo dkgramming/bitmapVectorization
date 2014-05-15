@@ -90,6 +90,7 @@
     <ClInclude Include="ColorTests.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="ImageLoader.h" />
+    <ClInclude Include="ImageTests.h" />
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="MathHelperTests.h" />
     <ClInclude Include="Node.h" />

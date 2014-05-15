@@ -8,7 +8,6 @@ RawImage::RawImage( int a_width, int a_height )
 	pPixelData = new Color[ a_width * a_height ];
 }
 
-
 RawImage::~RawImage(void)
 {
 	delete[] pPixelData;
@@ -25,4 +24,14 @@ void RawImage::setPixel( int a_x, int a_y, Color pixelColor )
 	{
 		pPixelData[ a_x + ( a_y * width ) ] = pixelColor;
 	}
+}
+
+int RawImage::getWidth() const
+{
+	return width;
+}
+
+int RawImage::getHeight() const
+{
+	return height;
 }

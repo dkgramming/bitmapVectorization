@@ -35,5 +35,5 @@ void testAlmostEquals()
 void runMathHelperTests()
 {
 	testAlmostEquals();
-	std::cout << "Math Helper tests Passed!" << std::endl;
+	std::cout << "Math helper tests passed!" << std::endl;
 }

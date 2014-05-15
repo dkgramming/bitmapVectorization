@@ -11,6 +11,9 @@ public:
 	Color* getPixelData() const;
 	void setPixel( int, int, Color );
 
+	int getWidth() const;
+	int getHeight() const;
+
 private:
 	Color* pPixelData;
 	int width;

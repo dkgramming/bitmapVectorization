@@ -8,10 +8,12 @@
 #include "NodeTests.h"
 #include "ColorTests.h"
 #include "MathHelperTests.h"
+#include "ImageTests.h"
 
 void runAllTests()
 {
 	runMathHelperTests();
 	runColorTests();
 	runNodeTests();
+	runImageTests();
 }

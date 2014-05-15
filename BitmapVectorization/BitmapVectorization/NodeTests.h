@@ -103,5 +103,5 @@ void runNodeTests()
 	testIsSimilar();
 	testAddNode();
 	testRemoveNode();
-	std::cout << "Node Tests Passed!" << std::endl;
+	std::cout << "Node tests passed!" << std::endl;
 }
