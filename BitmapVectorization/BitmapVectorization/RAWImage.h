@@ -8,14 +8,14 @@ public:
 	RawImage( int, int );
 	~RawImage(void);
 
-	Color* getPixelData() const;
-	void setPixel( int, int, Color );
+	Color** getPixelData() const;
+	void setPixel( int, int, int, int );
 
 	int getWidth() const;
 	int getHeight() const;
 
 private:
-	Color* pPixelData;
+	Color** pPixelData;
 	int width;
 	int height;
 };

@@ -55,6 +55,8 @@ void ImageLoader::parseRawData( char* a_pData, RawImage& a_image )
 		int r = ( a_pData[ index ] + 256 ) % 256;
 		int g = ( a_pData[ index + 1 ] + 256 ) % 256;
 		int b = ( a_pData[ index + 2 ] + 256 ) % 256;
+
+		a_image.setPixel( index / 3, r, g, b );
 	}
 }
 
