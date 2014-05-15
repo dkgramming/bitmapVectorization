@@ -63,10 +63,26 @@ void testGetB()
 	assert( isTwoFiddyFie );
 }
 
+void testSetYUV()
+{
+	float y = u = v = 0.0f;
+	Color testColor( y, u, v );
+
+	int r = g = b = 0;
+	testColor.setYUV( r, g, b );
+
+	bool yIsZero = ( testColor.getY() == 0.0f );
+	bool uIsZero = ( testColor.getU() == 0.0f );
+	bool vIsZero = ( testColor.getV() == 0.0f );
+
+	assert( yIsZero && uIsZero && vIsZero );
+}
+
 void runColorTests()
 {
 	testGetR();
 	testGetG();
 	testGetB();
+	testSetYUV();
 	std::cout << "Color tests passed!" << std::endl;
 }
