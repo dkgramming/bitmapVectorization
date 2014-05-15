@@ -12,9 +12,9 @@ void testLoadImage()
 {
 	// Load raw image file
 	ImageLoader loader;
-	Graph graph( 4, 6 );
+	Graph graph( 4, 4 );
 
-	bool imageLoaded = loader.loadImage( "Images/test1.raw", graph );
+	bool imageLoaded = loader.loadImage( "Images/test0.raw", graph );
 
 	assert( imageLoaded );
 }

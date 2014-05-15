@@ -54,6 +54,7 @@ void ImageLoader::parseRawData( char* a_pData, Graph& a_graph )
 		int r = ( a_pData[ index ] + 256 ) % 256;
 		int g = ( a_pData[ index + 1 ] + 256 ) % 256;
 		int b = ( a_pData[ index + 2 ] + 256 ) % 256;
+		cout << "R: " << r << " G: " << g << " B: " << b << endl;
 
 		a_graph.setColorAtNode( index / 3 , r, g, b );
 	}
