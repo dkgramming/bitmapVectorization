@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include "ImageLoader.h"
-#include "RawImage.h"
 
 using namespace std;
 
@@ -14,7 +13,7 @@ ImageLoader::~ImageLoader(void)
 {
 }
 
-bool ImageLoader::loadImage( char* a_path, int a_width, int a_height, Graph& a_graph )
+bool ImageLoader::loadImage( char* a_path, Graph& a_graph )
 {
 	ifstream fileIn( a_path, ios::binary );
 
@@ -56,7 +55,7 @@ void ImageLoader::parseRawData( char* a_pData, Graph& a_graph )
 		int g = ( a_pData[ index + 1 ] + 256 ) % 256;
 		int b = ( a_pData[ index + 2 ] + 256 ) % 256;
 
-		a_graph.setColorAtNode( index , r, g, b );
+		a_graph.setColorAtNode( index / 3 , r, g, b );
 	}
 }
 

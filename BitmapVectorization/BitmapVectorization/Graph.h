@@ -6,7 +6,7 @@
 class Graph
 {
 public:
-	Graph( RawImage );
+	Graph( int, int );
 	~Graph(void);
 	void setColorAtNode( int, int, int, int );
 

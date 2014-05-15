@@ -1,15 +1,13 @@
 #include "Graph.h"
 
-Graph::Graph( RawImage a_image )
+Graph::Graph( int a_numColumns, int a_numRows )
 {
-	numRows = a_image.getHeight();
-	numColumns = a_image.getWidth();
+	numRows = a_numRows;
+	numColumns = a_numColumns;
 
 	// Create all the nodes for the graph,
 	// starting by creating all the rows
-	pNodes = new Node*[ numRows * numColumns];
-
-	//setNodeColors( a_image );
+	pNodes = new Node*[ numRows * numColumns ];
 }
 
 
@@ -27,7 +25,8 @@ Graph::~Graph(void)
 
 void Graph::setColorAtNode( int a_index, int a_r, int a_g, int a_b )
 {
-	Color newColor( a_r, a_g, a_b );
+	Color newColor;
+	newColor.setYUV( a_r, a_g, a_b );
 	pNodes[ a_index ]->setColor( newColor );
 }
 
