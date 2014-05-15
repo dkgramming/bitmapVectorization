@@ -14,7 +14,7 @@ public:
 	int getNumCols() const;
 
 private:
-	Node** nodes;
+	Node** pNodes;
 	int numRows;
 	int numColumns;
 };

@@ -7,41 +7,31 @@ Graph::Graph( RawImage a_image )
 
 	// Create all the nodes for the graph,
 	// starting by creating all the rows
-	nodes = new Node*[numRows];
+	pNodes = new Node*[ numRows * numColumns];
 
-	// Create the columns for each row
-	for ( int i = 0; i < numRows; ++i )
-	{
-		nodes[i] = new Node[numColumns];
-	}
-
-	setNodeColors( a_image );
+	//setNodeColors( a_image );
 }
 
 
 Graph::~Graph(void)
 {
 	// Delete each column
-	for( int i = 0; i < numRows; ++i )
+	for( int i = 0; i < numRows * numColumns; ++i )
 	{
-		delete[] nodes[i];
+		delete pNodes[i];
 	}
 
 	// Delete all the rows
-	delete[] nodes;
+	delete[] pNodes;
 }
 
 void Graph::setNodeColors( const RawImage& image )
 {
 	Color** pixelData = image.getPixelData();
 
-	for( int rowIndex = 0; rowIndex < numRows; ++rowIndex )
+	for( int index = 0; index < numRows * numColumns; ++index )
 	{
-		for( int columnIndex = 0; columnIndex < numColumns; ++columnIndex )
-		{
-			Color color( *pixelData[ columnIndex + ( rowIndex * numColumns ) ] );
-			nodes[ columnIndex ][ rowIndex ].setColor( color ); 
-		}
+		pNodes[ index ]->setColor( *pixelData[ index ] );
 	}
 }
 
