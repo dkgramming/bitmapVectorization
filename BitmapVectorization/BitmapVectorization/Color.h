@@ -19,6 +19,7 @@ public:
 	void setU( float );
 	void setV( float );
 	void setYUV( float, float, float );
+	void setYUV( int, int, int );
 
 private:
 	float y;

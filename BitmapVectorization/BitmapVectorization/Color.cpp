@@ -63,3 +63,18 @@ void Color::setYUV( float a_y, float a_u, float a_v )
 	setU( a_u );
 	setV( a_v );
 }
+
+void Color::setYUV( int a_r, int a_g, int a_b )
+{
+	const float W_R = 0.299f;
+	const float W_G = 0.587f;
+	const float W_B = 0.114f;
+	const float U_MAX = 0.436f;
+	const float V_MAX = 0.615f;
+
+	float y = ( W_R * a_r ) + ( W_G * a_g ) + ( W_B * a_b );
+	float u = U_MAX * ( ( a_b - y ) / ( 1 - W_B ) );
+	float v = V_MAX * ( ( a_r - y ) / ( 1 - W_R ) );
+
+	setYUV( y, u, v );
+}
