@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include <iostream>
+
 #include "ImageLoader.h"
 #include "Graph.h"
 
@@ -22,4 +24,5 @@ void testGraphCreation()
 void runGraphTests()
 {
 	testGraphCreation();
+	std::cout << "Graph tests passed!" << std::endl;
 }

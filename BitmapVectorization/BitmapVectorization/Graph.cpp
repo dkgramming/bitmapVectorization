@@ -5,9 +5,13 @@ Graph::Graph( int a_numColumns, int a_numRows )
 	numRows = a_numRows;
 	numColumns = a_numColumns;
 
-	// Create all the nodes for the graph,
-	// starting by creating all the rows
+	// Create all the nodes for the graph
 	pNodes = new Node*[ numRows * numColumns ];
+
+	for( int i = 0; i < numRows * numColumns; ++i )
+	{
+		pNodes[ i ] = new Node();
+	}
 }
 
 
@@ -16,7 +20,7 @@ Graph::~Graph(void)
 	// Delete each column
 	for( int i = 0; i < numRows * numColumns; ++i )
 	{
-		delete pNodes[i];
+		delete pNodes[ i ];
 	}
 
 	// Delete all the rows
