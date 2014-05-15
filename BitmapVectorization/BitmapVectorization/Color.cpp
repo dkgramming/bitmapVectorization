@@ -21,21 +21,21 @@ float Color::getU() const { return u; }
 
 float Color::getV() const { return v; }
 
-int Color::getR() const
+float Color::getR() const
 {
 	float r = MAX_RGB_VALUE * ( y + v / 0.877f );
 	r = ( r > MAX_RGB_VALUE ) ? MAX_RGB_VALUE : r;
 	return r;
 }
 
-int Color::getG() const
+float Color::getG() const
 {
 	float g = MAX_RGB_VALUE * ( y - 0.395f * u - 0.581f * v );
 	g = ( g > MAX_RGB_VALUE ) ? MAX_RGB_VALUE : g;
 	return g;
 }
 
-int Color::getB() const
+float Color::getB() const
 {
 	float b = MAX_RGB_VALUE * ( y + u / 0.492f );
 	b = ( b > MAX_RGB_VALUE ) ? MAX_RGB_VALUE : b;
