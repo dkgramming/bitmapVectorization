@@ -34,6 +34,11 @@ void Graph::setColorAtNode( int a_index, int a_r, int a_g, int a_b )
 	pNodes[ a_index ]->setColor( newColor );
 }
 
+void Graph::printRgbAtNode( int a_index )
+{
+	pNodes[ a_index ]->printRgb();
+}
+
 int Graph::getNumRows() const
 {
 	return numRows;

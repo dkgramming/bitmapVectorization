@@ -23,6 +23,8 @@ public:
 	Color getColor() const;
 	void setColor( Color );
 
+	void printRgb() const;
+
 private:
 	vector<Node*> neighbors;
 	Color color;
