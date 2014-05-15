@@ -18,6 +18,7 @@ void testGetR()
 
 	// Test for 102
 	color.setYUV( .369f, .229f, .027f );
+	cout << color.getR() << endl;
 	bool isOneOTwo = almostEquals( color.getR(), 102.0f );
 	assert( isOneOTwo );
 
