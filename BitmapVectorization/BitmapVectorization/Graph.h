@@ -8,7 +8,7 @@ class Graph
 public:
 	Graph( RawImage );
 	~Graph(void);
-	void setNodeColors( const RawImage& );
+	void setColorAtNode( int, int, int, int );
 
 	int getNumRows() const;
 	int getNumCols() const;

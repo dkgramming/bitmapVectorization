@@ -25,14 +25,10 @@ Graph::~Graph(void)
 	delete[] pNodes;
 }
 
-void Graph::setNodeColors( const RawImage& image )
+void Graph::setColorAtNode( int a_index, int a_r, int a_g, int a_b )
 {
-	Color** pixelData = image.getPixelData();
-
-	for( int index = 0; index < numRows * numColumns; ++index )
-	{
-		pNodes[ index ]->setColor( *pixelData[ index ] );
-	}
+	Color newColor( a_r, a_g, a_b );
+	pNodes[ a_index ]->setColor( newColor );
 }
 
 int Graph::getNumRows() const

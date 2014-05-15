@@ -14,7 +14,7 @@ ImageLoader::~ImageLoader(void)
 {
 }
 
-bool ImageLoader::loadImage( char* a_path, int a_width, int a_height, RawImage& a_image )
+bool ImageLoader::loadImage( char* a_path, int a_width, int a_height, Graph& a_graph )
 {
 	ifstream fileIn( a_path, ios::binary );
 
@@ -30,7 +30,7 @@ bool ImageLoader::loadImage( char* a_path, int a_width, int a_height, RawImage& 
 
 		pFileContents[ length ] = 0;
 
-		parseRawData( pFileContents, a_image );
+		parseRawData( pFileContents, a_graph );
 
 		delete[] pFileContents;
 
@@ -41,10 +41,10 @@ bool ImageLoader::loadImage( char* a_path, int a_width, int a_height, RawImage& 
 
 }
 
-void ImageLoader::parseRawData( char* a_pData, RawImage& a_image )
+void ImageLoader::parseRawData( char* a_pData, Graph& a_graph )
 {
-	int width = a_image.getWidth();
-	int height = a_image.getHeight();
+	int width = a_graph.getNumCols();
+	int height = a_graph.getNumRows();
 
 	const unsigned int TOTAL_COLOR_CHANNELS = width * height * 3;
 
@@ -56,7 +56,7 @@ void ImageLoader::parseRawData( char* a_pData, RawImage& a_image )
 		int g = ( a_pData[ index + 1 ] + 256 ) % 256;
 		int b = ( a_pData[ index + 2 ] + 256 ) % 256;
 
-		a_image.setPixel( index / 3, r, g, b );
+		a_graph.setColorAtNode( index , r, g, b );
 	}
 }
 
