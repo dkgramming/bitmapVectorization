@@ -44,3 +44,13 @@ void Graph::setNodeColors( const RawImage& image )
 		}
 	}
 }
+
+int Graph::getNumRows() const
+{
+	return numRows;
+}
+
+int Graph::getNumCols() const
+{
+	return numColumns;
+}

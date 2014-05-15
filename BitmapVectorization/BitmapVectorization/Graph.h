@@ -10,6 +10,9 @@ public:
 	~Graph(void);
 	void setNodeColors( const RawImage& );
 
+	int getNumRows() const;
+	int getNumCols() const;
+
 private:
 	Node** nodes;
 	int numRows;

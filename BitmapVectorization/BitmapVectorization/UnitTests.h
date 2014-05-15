@@ -9,6 +9,7 @@
 #include "ColorTests.h"
 #include "MathHelperTests.h"
 #include "ImageTests.h"
+#include "GraphTests.h"
 
 void runAllTests()
 {
@@ -16,4 +17,5 @@ void runAllTests()
 	runColorTests();
 	runNodeTests();
 	runImageTests();
+	runGraphTests();
 }
