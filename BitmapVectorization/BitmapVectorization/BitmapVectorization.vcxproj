@@ -82,6 +82,7 @@
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Coordinate.cpp" />
     <ClCompile Include="RawImage.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -96,6 +97,7 @@
     <ClInclude Include="MathHelperTests.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeTests.h" />
+    <ClInclude Include="Coordinate.h" />
     <ClInclude Include="RawImage.h" />
     <ClInclude Include="UnitTests.h" />
   </ItemGroup>

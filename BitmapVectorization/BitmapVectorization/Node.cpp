@@ -3,9 +3,22 @@
 
 using namespace std;
 
-Node::Node(void) {}
+Node::Node(void)
+{
+	// Set default neighbor indices to -1
+	for( int i = 0; i < MAX_NODES; ++i )
+	{
+		neighbors[ i ] = new Coordinate( -1, -1 );
+	}
+}
 
-Node::~Node(void) {}
+Node::~Node(void)
+{
+	for( int i = 0; i < MAX_NODES; ++i )
+	{
+		delete neighbors[ i ];
+	}
+}
 
 /**
  * Check if this node has similar YUV values to another
@@ -20,10 +33,12 @@ bool Node::isSimilar( const Node& otherNode )
 	{
 		deltaY *= -1;
 	}
+
 	if( deltaU < 0 )
 	{
 		deltaU *= -1;
 	}
+
 	if( deltaV < 0 )
 	{
 		deltaV *= -1;
@@ -37,35 +52,12 @@ bool Node::isSimilar( const Node& otherNode )
 }
 
 /**
- * Add a node to this node
+ * Disconnects node connections with a neighbor
  */
-void Node::addNode( Node* nodeToAdd )
+void Node::severConnection( NeighborDirection direction )
 {
-	if ( neighbors.size() < MAX_NODES )
-	{
-		neighbors.push_back( nodeToAdd );
-	}
-}
-
-/**
- * Remove a node from this node
- */
-void Node::removeNode( const Node& nodeToRemove )
-{
-	// Search through all nodes 
-	for ( unsigned int i = 0; i < neighbors.size(); ++i )
-	{
-		Node* pCurrentNeighbor = neighbors[i];
-
-		// If the node currently being checked has the
-		// same memory address as the nodeToRemove,
-		// remove it from our list of nodes.
-		if ( pCurrentNeighbor == &nodeToRemove )
-		{
-			neighbors.erase( neighbors.begin() + i );
-			break;
-		}
-	}
+	neighbors[ direction ]->setX( -1 );
+	neighbors[ direction ]->setY( -1 );
 }
 
 /**
@@ -92,12 +84,33 @@ const float Node::maxDeltaV()
 	return 6 / (float)255;
 }
 
+Coordinate Node::getNeighborCoord( NeighborDirection direction )
+{
+	return *neighbors[ direction ];
+}
+
+void Node::setNeighbor( int graphNeighborXIndex, int graphNeighborYIndex, NeighborDirection direction )
+{
+	neighbors[ direction ]->setX( graphNeighborXIndex );
+	neighbors[ direction ]->setY( graphNeighborYIndex );
+}
+
 /**
  * Gets the total amount of neighbors for this Node
  */
 int Node::getNeighborCount() const
 {
-	return neighbors.size();
+	int size = 0;
+
+	for( int i = 0; i < MAX_NODES; ++i )
+	{
+		if( neighbors[ i ]->getX() != -1 || neighbors[ i ]->getY() != -1 )
+		{
+			++size;
+		}
+	}
+
+	return size;
 }
 
 /**

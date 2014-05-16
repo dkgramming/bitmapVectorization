@@ -11,7 +11,7 @@ void testAlmostEquals()
     float f2 = (float)( 1 / std::sqrt( 5 ) / std::sqrt( 5 ) );
 	assert( almostEquals( f1, f2 ) );
 
-	// Test one decimal point off
+	// Test one decimal Coordinate off
 	f1 = 0.1f;
 	f2 = 0.2f;
 	assert( almostEquals( f1, f2 ) );

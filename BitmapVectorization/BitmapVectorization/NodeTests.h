@@ -9,11 +9,36 @@
  * Node unit tests
  */
 
+void testGetNeighborCount()
+{
+	Node nodeA;
+
+	int currentNeighborCount = nodeA.getNeighborCount();
+	bool noNeighborsYet = ( currentNeighborCount == 0 );
+	assert( noNeighborsYet );
+
+	nodeA.setNeighbor( 0, 0, NeighborDirection::LEFT );
+	currentNeighborCount = nodeA.getNeighborCount();
+	bool neighborAdded = ( currentNeighborCount == 1 );
+	assert( neighborAdded );
+
+	for( int i = 0; i < 8; ++i )
+	{
+		nodeA.setNeighbor( 0, 0, NeighborDirection( i ) );
+	}
+	bool neighborsFilled = ( nodeA.getNeighborCount() == 8 );
+	assert( neighborsFilled );
+
+	nodeA.setNeighbor( -1, -1, NeighborDirection::LEFT );
+	bool neighborRemoved = ( nodeA.getNeighborCount() == 7 );
+	assert( neighborRemoved );
+}
+
 void testIsSimilar()
 {
 	// Let's start with two identical nodes
 	Node nodeA;
-	Node nodeB( nodeA ); // Create using copy constructor
+	Node nodeB; // Create using copy constructor
 
 	// Check if the two nodes are similar
 	bool nodesAreSimilar = nodeA.isSimilar( nodeB );
@@ -51,57 +76,36 @@ void testIsSimilar()
 	assert( nodesNotSimilar );
 }
 
-void testAddNode()
+void testSeverConnection()
 {
-	// So we have two Nodes
 	Node nodeA;
-	Node nodeB;
 
-	// Node A has 0 neighbors... for now
-	int initialNeighborCount = nodeA.getNeighborCount();
-
-	// Add a Node to Node A and see if the change in neighbors equals 1
-	nodeA.addNode( &nodeB );
-	bool addedNode = ( nodeA.getNeighborCount() - initialNeighborCount ) == 1;
-	assert( addedNode );
-
-	// Now add the Hot Spice 15(TM) to Node A
-	// Total neighbors should not exceed 8 (max)
-	for( int i = 0; i < 15; ++i )
+	for( int i = 0; i < 8; ++i )
 	{
-		nodeA.addNode( &Node() );
+		nodeA.setNeighbor( 0, 0, NeighborDirection( i ) );
 	}
-	bool noMoreThanEight = nodeA.getNeighborCount() == 8;
-	assert( noMoreThanEight );
-}
 
-void testRemoveNode()
-{
-	// Node babies = 2
-	Node nodeA;
-	Node nodeB;
+	nodeA.severConnection( NeighborDirection::LEFT );
+	bool neighborRemoved = ( nodeA.getNeighborCount() == 7 );
+	assert( neighborRemoved );
 
-	// Add Node B to Node A
-	nodeA.addNode( &nodeB );
-	int neighborCountAfterAdd = nodeA.getNeighborCount();
+	// Try to remove the same neighbor twice in a row
+	nodeA.severConnection( NeighborDirection::LEFT );
+	bool noNewNeighborRemoved = ( nodeA.getNeighborCount() == 7 );
+	assert( noNewNeighborRemoved );
 
-	// Remove Node B from Node A
-	// Now Node A should have no nodes
-	nodeA.removeNode( nodeB );
-	bool noNeighborsThere = ( nodeA.getNeighborCount() - neighborCountAfterAdd ) == -1;
-	assert( noNeighborsThere );
-
-	// Now try removing Node B again (it's not Node A's neighbor)
-	int neighborCountAfterRemoval = nodeA.getNeighborCount();
-	nodeA.removeNode( nodeB );
-	bool noEffectFromInvalidRemoval = ( nodeA.getNeighborCount() - neighborCountAfterRemoval ) == 0;
-	assert( noEffectFromInvalidRemoval );
+	for( int i = 0; i < 8; ++i )
+	{
+		nodeA.severConnection( NeighborDirection( i ) );
+	}
+	bool allNeighborsDead = ( nodeA.getNeighborCount() == 0 );
+	assert( allNeighborsDead );
 }
 
 void runNodeTests()
 {
+	testGetNeighborCount();
 	testIsSimilar();
-	testAddNode();
-	testRemoveNode();
+	testSeverConnection();
 	std::cout << "Node tests passed!" << std::endl;
 }

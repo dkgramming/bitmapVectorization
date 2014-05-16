@@ -8,14 +8,14 @@ class Graph
 public:
 	Graph( int, int );
 	~Graph(void);
-	void setColorAtNode( int, int, int, int );
-	void printRgbAtNode( int );
+	void setColorAtNode( int, int, int, int, int );
+	void printRgbAtNode( int, int );
 
 	int getNumRows() const;
 	int getNumCols() const;
 
 private:
-	Node** pNodes;
+	Node*** pNodes;
 	int numRows;
 	int numColumns;
 };

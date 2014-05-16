@@ -55,7 +55,9 @@ void ImageLoader::parseRawData( char* a_pData, Graph& a_graph )
 		int g = ( a_pData[ index + 1 ] + 256 ) % 256;
 		int b = ( a_pData[ index + 2 ] + 256 ) % 256;
 
-		a_graph.setColorAtNode( index / 3 , r, g, b );
+		int xCoord = ( index / 3 ) % width;
+		int yCoord = ( index / 3 ) / width;
+		a_graph.setColorAtNode( xCoord, yCoord, r, g, b );
 	}
 }
 
