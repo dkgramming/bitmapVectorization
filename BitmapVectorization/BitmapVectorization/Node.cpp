@@ -118,5 +118,5 @@ void Node::setColor( Color newColor )
 
 void Node::printRgb() const
 {
-	cout << "R: " << color.getR() << " G: " << color.getG() << " B: " << color.getB() << endl;
+	cout << "R: " << color.getR() << "\tG: " << color.getG() << "\tB: " << color.getB() << endl;
 }

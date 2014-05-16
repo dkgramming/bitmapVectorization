@@ -11,7 +11,7 @@ bool almostEquals( float lValue, float rValue )
 	float mean = ( lValue + rValue ) * 0.5f;
 	float tolerance = ceil( mean * 0.01f ) / ( mean * mean );
 
-	float TOLERANCE = 0.5f;
+	float TOLERANCE = 1.0f;
 
 	return ( difference <= TOLERANCE );
 }

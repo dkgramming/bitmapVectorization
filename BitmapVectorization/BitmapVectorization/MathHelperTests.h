@@ -29,7 +29,7 @@ void testAlmostEquals()
 	// Test real far numbies
 	f1 = 1000.0f;
 	f2 = 999.0f;
-	assert( !almostEquals( f1, f2 ) );
+	assert( almostEquals( f1, f2 ) );
 }
 
 void runMathHelperTests()

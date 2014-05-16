@@ -7,7 +7,7 @@ RawImage::RawImage( int a_width, int a_height )
 
 	pPixelData = new Color*[ width * height ];
 
-	for ( unsigned int index = 0; index < width * height; ++index )
+	for ( int index = 0; index < width * height; ++index )
 	{
 		pPixelData[ index ] = new Color();
 	}
@@ -32,7 +32,7 @@ void RawImage::setPixel( int a_index, int a_r, int a_g, int a_b )
 {
 	if ( a_index < width * height )
 	{
-		pPixelData[ a_index ]->setYUV( a_r, a_g, a_b );
+		pPixelData[ a_index ]->setRGB( a_r, a_g, a_b );
 	}
 }
 
