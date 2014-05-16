@@ -24,14 +24,14 @@ void testGraphCreation()
 void testNodeColors()
 {
 	ImageLoader loader;
-	const int COL_COUNT = 4;
-	const int ROW_COUNT = 4;
+	const int COL_COUNT = 6;
+	const int ROW_COUNT = 6;
 	Graph graph( COL_COUNT, ROW_COUNT );
-	loader.loadImage( "Images/test0.raw", graph );
+	loader.loadImage( "Images/test1.raw", graph );
 
 	for( int index = 0; index < COL_COUNT * ROW_COUNT; ++index )
 	{
-		graph.printRgbAtIndex( index );
+		graph.printRgbAtNode( index );
 	}
 }
 
