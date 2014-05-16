@@ -28,11 +28,6 @@ void testNodeColors()
 	const int ROW_COUNT = 6;
 	Graph graph( COL_COUNT, ROW_COUNT );
 	loader.loadImage( "Images/test1.raw", graph );
-
-	for( int index = 0; index < COL_COUNT * ROW_COUNT; ++index )
-	{
-		graph.printRgbAtNode( index );
-	}
 }
 
 void runGraphTests()

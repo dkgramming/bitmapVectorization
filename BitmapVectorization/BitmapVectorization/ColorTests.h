@@ -18,7 +18,7 @@ void testGetR()
 
 	// Test for 102
 	color.setYUV( .369f, .229f, .027f );
-	bool isOneOTwo = almostEquals( color.getR(), 102.0f );
+	bool isOneOTwo = almostEquals( (float)color.getR(), 102.0f );
 	assert( isOneOTwo );
 
 	// Test for 255
@@ -36,7 +36,7 @@ void testGetG()
 
 	// Test for 67
 	color.setYUV( .369f, .229f, .027f );
-	bool isSittySen = almostEquals( color.getG(), 67.0f );
+	bool isSittySen = almostEquals( (float)color.getG(), 67.0f );
 	assert( isSittySen );
 
 	// Test for 255
@@ -54,7 +54,7 @@ void testGetB()
 
 	// Test for 213
 	color.setYUV( .369f, .229f, .027f );
-	bool isTooTirteen = almostEquals( color.getB(), 213.0f );
+	bool isTooTirteen = almostEquals( (float)color.getB(), 213.0f );
 	assert( isTooTirteen );
 
 	// Test for 255
@@ -63,7 +63,7 @@ void testGetB()
 	assert( isTwoFiddyFie );
 }
 
-void testSetYUV()
+void testSetRGB()
 {
 	float y = 0.0f;
 	float u = 0.0f;
@@ -73,7 +73,7 @@ void testSetYUV()
 	int r = 0;
 	int g = 0;
 	int b = 0;
-	testColor.setYUV( r, g, b );
+	testColor.setRGB( r, g, b );
 
 	bool yIsZero = ( testColor.getY() == 0.0f );
 	bool uIsZero = ( testColor.getU() == 0.0f );
@@ -87,6 +87,6 @@ void runColorTests()
 	testGetR();
 	testGetG();
 	testGetB();
-	testSetYUV();
+	testSetRGB();
 	std::cout << "Color tests passed!" << std::endl;
 }
