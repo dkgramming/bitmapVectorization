@@ -113,7 +113,7 @@ void Node::setColor( Color newColor )
 	color = newColor;
 }
 
-void printRgb() const
+void Node::printRgb() const
 {
-	cout << "R: " << color.getR() << " G: " << color.getG() << " B: " << color.getB() << endl;
+	std::cout << "R: " << color.getR() << " G: " << color.getG() << " B: " << color.getB() << std::endl;
 }

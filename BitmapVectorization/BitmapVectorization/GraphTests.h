@@ -31,7 +31,7 @@ void testNodeColors()
 
 	for( int index = 0; index < COL_COUNT * ROW_COUNT; ++index )
 	{
-		graph.printRgbAtIndex( index );
+		graph.printRgbAtNode( index );
 	}
 }
 
