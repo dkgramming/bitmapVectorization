@@ -26,7 +26,7 @@ Node::~Node(void)
 /**
  * Check if this node has similar YUV values to another
  */
-bool Node::isSimilar( const Node& otherNode )
+bool Node::isSimilar( const Node& otherNode ) const
 {
 	float deltaY = this->color.getY() - otherNode.color.getY();
 	float deltaU = this->color.getU() - otherNode.color.getU();
@@ -92,7 +92,7 @@ bool Node::neighborExistsAt( NeighborDirection direction ) const
  */
 const float Node::maxDeltaY()
 {
-	return 48 / (float)255;
+	return ( 48 / (float)255 );
 }
 
 /**
@@ -100,7 +100,7 @@ const float Node::maxDeltaY()
  */
 const float Node::maxDeltaU() 
 {
-	return 7 / (float)255;
+	return ( 7 / (float)255 );
 }
 
 /**
@@ -108,7 +108,7 @@ const float Node::maxDeltaU()
  */
 const float Node::maxDeltaV() 
 {
-	return 6 / (float)255;
+	return ( 6 / (float)255 );
 }
 
 Coordinate Node::getNeighborCoord( NeighborDirection direction )

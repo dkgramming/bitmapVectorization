@@ -27,7 +27,7 @@ public:
 	Node( void );
 	~Node( void );
 
-	bool isSimilar( const Node& );
+	bool isSimilar( const Node& ) const;
 	void severConnection( NeighborDirection );
 	void invalidate( NeighborDirection );
 	bool isValid( NeighborDirection ) const;

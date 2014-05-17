@@ -7,9 +7,6 @@ public:
 	Color( float, float, float );
 	~Color( void );
 
-	void updateRGB();
-	void updateYUV();
-
 	float getY() const;
 	float getU() const;
 	float getV() const;
@@ -37,6 +34,9 @@ private:
 	void setR( int );
 	void setG( int );
 	void setB( int );
+	
+	void updateRGB();
+	void updateYUV();
 
 	static const unsigned int MAX_YUV_VALUE = 1;
 	static const unsigned int MAX_RGB_VALUE = 255;
