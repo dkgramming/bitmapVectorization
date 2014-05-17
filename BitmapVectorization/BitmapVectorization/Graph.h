@@ -24,5 +24,5 @@ private:
 	bool isOnBottom( int );
 	bool isOnLeft( int );
 	bool isOnRight( int );
-	void markInvalidNeighbors( Node, int, int );
+	void markInvalidNeighbors( Node&, int, int );
 };

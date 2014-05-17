@@ -73,7 +73,8 @@ void Graph::connectNodes()
 	const Coordinate BOTTOM_LEFT_OFFSET( -1, 1 );
 	const Coordinate BOTTOM_OFFSET( 0, 1 );
 	const Coordinate BOTTOM_RIGHT_OFFSET( 1, 1 );
-	const Coordinate OFFSETS[ 8 ] =
+	
+	Coordinate OFFSETS[ Node::MAX_NEIGHBORS ] =
 	{
 		TOP_LEFT_OFFSET,
 		TOP_OFFSET,
@@ -111,7 +112,7 @@ bool Graph::isOnRight( int x ) { return x == width - 1; }
 /**
  * Confirms invalid nodes for positions off the graph
  */
-void Graph::markInvalidNeighbors( Node currentNode, int x, int y )
+void Graph::markInvalidNeighbors( Node& currentNode, int x, int y )
 {
 	if( isOnTop( y ) )
 	{

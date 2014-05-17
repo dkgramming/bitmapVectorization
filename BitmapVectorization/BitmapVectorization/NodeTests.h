@@ -102,10 +102,30 @@ void testSeverConnection()
 	assert( allNeighborsDead );
 }
 
+void testValidation()
+{
+	Node node;
+
+	// Invalidate all neighbor nodes
+	for( auto index = 0u; index < Node::MAX_NEIGHBORS; ++index )
+	{
+		node.invalidate( NeighborDirection( index ) );
+	}
+
+	// All neighbors should be invalid
+	for( auto index = 0u; index < Node::MAX_NEIGHBORS; ++index )
+	{
+		bool invalid = !( node.isValid( NeighborDirection( index ) ) );
+
+		assert( invalid );
+	}
+}
+
 void runNodeTests()
 {
 	testGetNeighborCount();
 	testIsSimilar();
 	testSeverConnection();
+	testValidation();
 	std::cout << "Node tests passed!" << std::endl;
 }
