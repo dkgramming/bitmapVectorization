@@ -16,6 +16,13 @@ public:
 
 private:
 	Node*** pNodes;
-	int numRows;
-	int numColumns;
+	int height;
+	int width;
+	
+	void connectNodes();
+	bool isOnTop( int );
+	bool isOnBottom( int );
+	bool isOnLeft( int );
+	bool isOnRight( int );
+	void markInvalidNeighbors( Node, int, int );
 };

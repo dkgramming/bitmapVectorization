@@ -5,8 +5,10 @@ using namespace std;
 
 Node::Node(void)
 {
+	neighbors = new Coordinate*[ MAX_NEIGHBORS ];
+
 	// Set default neighbor indices to -1
-	for( int i = 0; i < MAX_NODES; ++i )
+	for( int i = 0; i < MAX_NEIGHBORS; ++i )
 	{
 		neighbors[ i ] = new Coordinate( -1, -1 );
 	}
@@ -14,10 +16,11 @@ Node::Node(void)
 
 Node::~Node(void)
 {
-	for( int i = 0; i < MAX_NODES; ++i )
+	for( int i = 0; i < MAX_NEIGHBORS; ++i )
 	{
 		delete neighbors[ i ];
 	}
+	delete[] neighbors;
 }
 
 /**
@@ -52,12 +55,36 @@ bool Node::isSimilar( const Node& otherNode )
 }
 
 /**
- * Disconnects node connections with a neighbor
+ * Disconnects node connections with a neighbor in a given direction
  */
 void Node::severConnection( NeighborDirection direction )
 {
 	neighbors[ direction ]->setX( -1 );
 	neighbors[ direction ]->setY( -1 );
+}
+
+/**
+ * Confirms that a node has no connections in a given direction
+ */
+void Node::invalidate( NeighborDirection direction )
+{
+	neighbors[ direction ]->setX( INVALID );
+	neighbors[ direction ]->setY( INVALID );
+}
+
+/**
+ * Checks if a neighbor in the given direction is valid
+ */
+bool Node::isValid( NeighborDirection direction ) const
+{
+	return neighbors[ direction ]->getX() != INVALID ||
+		   neighbors[ direction ]->getY() != INVALID;
+}
+
+bool Node::neighborExistsAt( NeighborDirection direction ) const
+{
+	return neighbors[ direction ]->getX() >= 0 ||
+		   neighbors[ direction ]->getY() >= 0;
 }
 
 /**
@@ -91,8 +118,11 @@ Coordinate Node::getNeighborCoord( NeighborDirection direction )
 
 void Node::setNeighbor( int graphNeighborXIndex, int graphNeighborYIndex, NeighborDirection direction )
 {
-	neighbors[ direction ]->setX( graphNeighborXIndex );
-	neighbors[ direction ]->setY( graphNeighborYIndex );
+	if ( isValid( direction ) )
+	{
+		neighbors[ direction ]->setX( graphNeighborXIndex );
+		neighbors[ direction ]->setY( graphNeighborYIndex );
+	}
 }
 
 /**
@@ -102,9 +132,9 @@ int Node::getNeighborCount() const
 {
 	int size = 0;
 
-	for( int i = 0; i < MAX_NODES; ++i )
+	for( int i = 0; i < MAX_NEIGHBORS; ++i )
 	{
-		if( neighbors[ i ]->getX() != -1 || neighbors[ i ]->getY() != -1 )
+		if( neighborExistsAt( NeighborDirection( i ) ) )
 		{
 			++size;
 		}

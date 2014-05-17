@@ -22,11 +22,16 @@ enum NeighborDirection
 class Node
 {
 public:
+	static const int MAX_NEIGHBORS = 8;
+
 	Node( void );
 	~Node( void );
 
 	bool isSimilar( const Node& );
 	void severConnection( NeighborDirection );
+	void invalidate( NeighborDirection );
+	bool isValid( NeighborDirection ) const;
+	bool neighborExistsAt( NeighborDirection ) const;
 	static const float maxDeltaY();
 	static const float maxDeltaU();
 	static const float maxDeltaV();
@@ -40,9 +45,9 @@ public:
 	void printRgb() const;
 
 private:
-	static const int MAX_NODES = 8;
+	static const int INVALID = -2;
 
-	Coordinate *neighbors[ MAX_NODES ];
+	Coordinate **neighbors;
 	Color color;
 	int valence;
 };
