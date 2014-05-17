@@ -44,10 +44,11 @@ public:
 
 	void printRgb() const;
 
+	void print();
+
 private:
 	static const int INVALID = -2;
 
 	Coordinate **neighbors;
 	Color color;
-	int valence;
 };

@@ -22,3 +22,8 @@ int Coordinate::getY() const { return y; }
 
 void Coordinate::setX( int a_x ) { x = a_x; }
 void Coordinate::setY( int a_y ) { y = a_y; }
+
+void Coordinate::print()
+{
+	cout << "{ " << getX() << ", " << getY() << " }";
+}

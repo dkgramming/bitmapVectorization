@@ -1,4 +1,10 @@
 #pragma once
+
+#include <iostream>
+#include "Coordinate.h"
+
+using namespace std;
+
 class Coordinate
 {
 public:
@@ -11,8 +17,9 @@ public:
 	void setX( int );
 	void setY( int );
 
+	void print();
+
 private:
 	int x;
 	int y;
 };
-

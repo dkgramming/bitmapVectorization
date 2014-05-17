@@ -90,15 +90,15 @@ void Graph::connectNodes()
 	{
 		for( int y = 0; y < height; ++y )
 		{
-			Node currentNode = *pNodes[ x ][ y ];
-			markInvalidNeighbors( currentNode, x, y );
+			Node* pCurrentNode = pNodes[ x ][ y ];
+			markInvalidNeighbors( *pCurrentNode, x, y );
 
 			for( int i = 0; i < Node::MAX_NEIGHBORS; ++i )
 			{
 				Coordinate currentOffset = OFFSETS[ i ];
-				currentNode.setNeighbor( currentOffset.getX(),
-										 currentOffset.getY(),
-										 NeighborDirection( i ) );
+				pCurrentNode->setNeighbor( currentOffset.getX(),
+										   currentOffset.getY(),
+										   NeighborDirection( i ) );
 			}
 		}
 	}

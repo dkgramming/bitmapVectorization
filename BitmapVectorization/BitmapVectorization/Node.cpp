@@ -163,3 +163,23 @@ void Node::printRgb() const
 {
 	cout << "R: " << color.getR() << "\tG: " << color.getG() << "\tB: " << color.getB() << endl;
 }
+
+void Node::print()
+{
+	for( int i = 0; i < MAX_NEIGHBORS; ++i )
+	{
+		if( i == 3 || i == 5 )
+		{
+			cout << "\n";
+		}
+
+		neighbors[ i ]->print();
+		cout << "\t";
+
+		if( i == 3 )
+		{
+			cout << "\t\t";
+		}
+	}
+	cout << endl << endl;
+}
