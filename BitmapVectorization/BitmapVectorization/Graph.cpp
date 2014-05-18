@@ -63,6 +63,42 @@ int Graph::getNumCols() const
 	return width;
 }
 
+void Graph::severDissimilarNodes()
+{
+	for( int x = 0; x < width; ++x )
+	{
+		for( int y = 0; y < height; ++y )
+		{
+			Node* pCurrentNode = pNodes[ x ][ y ];
+
+			for( int i = 0; i < Node::MAX_NEIGHBORS; ++i )
+			{
+				Coordinate currentOffset = getOffsetAt( NeighborDirection( i ) );
+				int neighborX = ( x + currentOffset.getX() );
+				int neighborY = ( y + currentOffset.getY() );
+
+				bool nonNegative = ( neighborX >= 0 && neighborY >= 0 );
+				bool inRange = ( neighborX < getNumCols() && neighborY < getNumRows() );
+
+				if( nonNegative && inRange )
+				{
+					bool isSimilar = pCurrentNode->isSimilar( pNodes[ neighborX ][ neighborY ] );
+					
+					if( !isSimilar )
+					{
+						pCurrentNode->severConnection( NeighborDirection( i ) );
+					}
+				}
+			}
+
+			if(x == 0 )
+			{
+				pCurrentNode->print();
+			}
+		}
+	}
+}
+
 void Graph::connectNodes()
 {
 	for( int x = 0; x < width; ++x )
@@ -137,29 +173,29 @@ void Graph::markInvalidNeighbors( Node& currentNode, int x, int y )
 {
 	if( isOnTop( y ) )
 	{
-		currentNode.invalidate( NeighborDirection::TOP_LEFT );
-		currentNode.invalidate( NeighborDirection::TOP );
-		currentNode.invalidate( NeighborDirection::TOP_RIGHT );
+		currentNode.severConnection( NeighborDirection::TOP_LEFT );
+		currentNode.severConnection( NeighborDirection::TOP );
+		currentNode.severConnection( NeighborDirection::TOP_RIGHT );
 	}
 
 	if( isOnBottom( y ) )
 	{
-		currentNode.invalidate( NeighborDirection::BOTTOM_LEFT );
-		currentNode.invalidate( NeighborDirection::BOTTOM );
-		currentNode.invalidate( NeighborDirection::BOTTOM_RIGHT );
+		currentNode.severConnection( NeighborDirection::BOTTOM_LEFT );
+		currentNode.severConnection( NeighborDirection::BOTTOM );
+		currentNode.severConnection( NeighborDirection::BOTTOM_RIGHT );
 	}
 
 	if( isOnLeft( x ) )
 	{
-		currentNode.invalidate( NeighborDirection::TOP_LEFT );
-		currentNode.invalidate( NeighborDirection::LEFT );
-		currentNode.invalidate( NeighborDirection::BOTTOM_LEFT );
+		currentNode.severConnection( NeighborDirection::TOP_LEFT );
+		currentNode.severConnection( NeighborDirection::LEFT );
+		currentNode.severConnection( NeighborDirection::BOTTOM_LEFT );
 	}
 
 	if( isOnRight( x ) )
 	{
-		currentNode.invalidate( NeighborDirection::TOP_RIGHT );
-		currentNode.invalidate( NeighborDirection::RIGHT );
-		currentNode.invalidate( NeighborDirection::BOTTOM_RIGHT );
+		currentNode.severConnection( NeighborDirection::TOP_RIGHT );
+		currentNode.severConnection( NeighborDirection::RIGHT );
+		currentNode.severConnection( NeighborDirection::BOTTOM_RIGHT );
 	}
 }

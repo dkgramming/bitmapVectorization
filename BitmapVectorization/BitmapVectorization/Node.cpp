@@ -10,7 +10,7 @@ Node::Node(void)
 	// Set default neighbor indices to -1
 	for( int i = 0; i < MAX_NEIGHBORS; ++i )
 	{
-		neighbors[ i ] = new Coordinate( -1, -1 );
+		neighbors[ i ] = new Coordinate( DEFAULT, DEFAULT );
 	}
 }
 
@@ -26,11 +26,11 @@ Node::~Node(void)
 /**
  * Check if this node has similar YUV values to another
  */
-bool Node::isSimilar( const Node& otherNode ) const
+bool Node::isSimilar( const Node* otherNode ) const
 {
-	float deltaY = this->color.getY() - otherNode.color.getY();
-	float deltaU = this->color.getU() - otherNode.color.getU();
-	float deltaV = this->color.getV() - otherNode.color.getV();
+	float deltaY = this->color.getY() - otherNode->color.getY();
+	float deltaU = this->color.getU() - otherNode->color.getU();
+	float deltaV = this->color.getV() - otherNode->color.getV();
 
 	if( deltaY < 0 )
 	{
@@ -59,17 +59,8 @@ bool Node::isSimilar( const Node& otherNode ) const
  */
 void Node::severConnection( NeighborDirection direction )
 {
-	neighbors[ direction ]->setX( -1 );
-	neighbors[ direction ]->setY( -1 );
-}
-
-/**
- * Confirms that a node has no connections in a given direction
- */
-void Node::invalidate( NeighborDirection direction )
-{
-	neighbors[ direction ]->setX( INVALID );
-	neighbors[ direction ]->setY( INVALID );
+	neighbors[ direction ]->setX( SEVERED );
+	neighbors[ direction ]->setY( SEVERED );
 }
 
 /**
@@ -77,8 +68,8 @@ void Node::invalidate( NeighborDirection direction )
  */
 bool Node::isValid( NeighborDirection direction ) const
 {
-	return neighbors[ direction ]->getX() != INVALID ||
-		   neighbors[ direction ]->getY() != INVALID;
+	return neighbors[ direction ]->getX() != SEVERED ||
+		   neighbors[ direction ]->getY() != SEVERED;
 }
 
 bool Node::neighborExistsAt( NeighborDirection direction ) const

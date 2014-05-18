@@ -14,6 +14,8 @@ public:
 	int getNumRows() const;
 	int getNumCols() const;
 
+	void severDissimilarNodes();
+
 private:
 	Node*** pNodes;
 	int height;

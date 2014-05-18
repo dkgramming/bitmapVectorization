@@ -10,9 +10,21 @@
 #include "UnitTests.h"
 #include "ImageLoader.h"
 
+void runProgram()
+{
+	ImageLoader loader;
+	Graph graph( 4, 4 );
+
+	loader.loadImage( "Images/test0.raw", graph );
+
+	graph.severDissimilarNodes();
+}
+
 int main()
 {
 	runAllTests();
+
+	runProgram();
 
 	// Dump that memory leak data
 	_CrtDumpMemoryLeaks();

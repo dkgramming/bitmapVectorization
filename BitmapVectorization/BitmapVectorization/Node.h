@@ -27,9 +27,8 @@ public:
 	Node( void );
 	~Node( void );
 
-	bool isSimilar( const Node& ) const;
+	bool isSimilar( const Node* ) const;
 	void severConnection( NeighborDirection );
-	void invalidate( NeighborDirection );
 	bool isValid( NeighborDirection ) const;
 	bool neighborExistsAt( NeighborDirection ) const;
 	static const float maxDeltaY();
@@ -47,7 +46,8 @@ public:
 	void print();
 
 private:
-	static const int INVALID = -2;
+	static const int DEFAULT = -2;
+	static const int SEVERED = -3;
 
 	Coordinate **neighbors;
 	Color color;

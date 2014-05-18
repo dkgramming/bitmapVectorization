@@ -41,7 +41,7 @@ void testIsSimilar()
 	Node nodeB; // Create using copy constructor
 
 	// Check if the two nodes are similar
-	bool nodesAreSimilar = nodeA.isSimilar( nodeB );
+	bool nodesAreSimilar = nodeA.isSimilar( &nodeB );
 	assert( nodesAreSimilar );
 
 	// Let's make these nodes a little spicier
@@ -50,7 +50,7 @@ void testIsSimilar()
 
 	// Check if the two nodes are similar
 	// They shouldn't be
-	bool nodesAintSimilar = nodeA.isSimilar( nodeB );
+	bool nodesAintSimilar = nodeA.isSimilar( &nodeB );
 	assert( nodesAintSimilar );
 
 	// Now let's verify the similarity tolerance thresholds
@@ -60,7 +60,7 @@ void testIsSimilar()
 							 Node::maxDeltaV() );
 
 	// Check if the two nodes are similar
-	bool nodesAtThresholdSimilar = nodeA.isSimilar( nodeB );
+	bool nodesAtThresholdSimilar = nodeA.isSimilar( &nodeB );
 	assert( nodesAtThresholdSimilar );
 
 	// Let's test whether the absolute value conversion is working
@@ -72,7 +72,7 @@ void testIsSimilar()
 	// These nodes shouldn't be similar,
 	// even though the original delta values are less than the maxes
 	// (because they're negative)
-	bool nodesNotSimilar = nodeA.isSimilar( nodeB );
+	bool nodesNotSimilar = nodeA.isSimilar( &nodeB );
 	assert( nodesNotSimilar );
 }
 
@@ -109,7 +109,7 @@ void testValidation()
 	// Invalidate all neighbor nodes
 	for( auto index = 0u; index < Node::MAX_NEIGHBORS; ++index )
 	{
-		node.invalidate( NeighborDirection( index ) );
+		node.severConnection( NeighborDirection( index ) );
 	}
 
 	// All neighbors should be invalid
