@@ -104,10 +104,25 @@ void Graph::connectNodes()
 	}
 }
 
-bool Graph::isOnTop( int y ) { return y == 0; }
-bool Graph::isOnBottom( int y ) { return y == height - 1; }
-bool Graph::isOnLeft( int x ) { return x == 0; }
-bool Graph::isOnRight( int x ) { return x == width - 1; }
+bool Graph::isOnTop( int y ) const 
+{ 
+	return ( y == 0 ); 
+}
+
+bool Graph::isOnBottom( int y ) const 
+{ 
+	return ( y == ( height - 1 ) ); 
+}
+
+bool Graph::isOnLeft( int x ) const 
+{ 
+	return ( x == 0 ); 
+}
+
+bool Graph::isOnRight( int x ) const 
+{ 
+	return ( x == ( width - 1 ) ); 
+}
 
 /**
  * Confirms invalid nodes for positions off the graph

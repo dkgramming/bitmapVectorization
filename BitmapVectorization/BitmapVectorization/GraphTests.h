@@ -21,18 +21,8 @@ void testGraphCreation()
 	assert( dimensionsMatch );
 }
 
-void testNodeColors()
-{
-	ImageLoader loader;
-	const int COL_COUNT = 6;
-	const int ROW_COUNT = 6;
-	Graph graph( COL_COUNT, ROW_COUNT );
-	loader.loadImage( "Images/test1.raw", graph );
-}
-
 void runGraphTests()
 {
 	testGraphCreation();
-	testNodeColors();
 	std::cout << "Graph tests passed!" << std::endl;
 }

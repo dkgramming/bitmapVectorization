@@ -20,9 +20,9 @@ private:
 	int width;
 	
 	void connectNodes();
-	bool isOnTop( int );
-	bool isOnBottom( int );
-	bool isOnLeft( int );
-	bool isOnRight( int );
+	bool isOnTop( int ) const;
+	bool isOnBottom( int ) const;
+	bool isOnLeft( int ) const;
+	bool isOnRight( int ) const;
 	void markInvalidNeighbors( Node&, int, int );
 };
