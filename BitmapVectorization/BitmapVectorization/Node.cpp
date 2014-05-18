@@ -164,12 +164,18 @@ void Node::print()
 			cout << "\n";
 		}
 
-		neighbors[ i ]->print();
-		cout << "\t";
+		if( neighbors[ i ]->getX() != Node::SEVERED )
+		{
+			//neighbors[ i ]->print();
+			cout << "C";
+		}else{
+			cout << ".";
+		}
+		cout << " ";
 
 		if( i == 3 )
 		{
-			cout << "\t\t";
+			cout << "N ";
 		}
 	}
 	cout << endl << endl;
