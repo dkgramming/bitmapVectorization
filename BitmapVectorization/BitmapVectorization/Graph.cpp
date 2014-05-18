@@ -65,6 +65,27 @@ int Graph::getNumCols() const
 
 void Graph::connectNodes()
 {
+	for( int x = 0; x < width; ++x )
+	{
+		for( int y = 0; y < height; ++y )
+		{
+			Node* pCurrentNode = pNodes[ x ][ y ];
+			markInvalidNeighbors( *pCurrentNode, x, y );
+
+			for( int i = 0; i < Node::MAX_NEIGHBORS; ++i )
+			{
+				Coordinate currentOffset = getOffsetAt( NeighborDirection( i ) );
+				pCurrentNode->setNeighbor( currentOffset.getX(),
+										   currentOffset.getY(),
+										   NeighborDirection( i ) );
+			}
+		}
+	}
+}
+
+// TODO: Make this more static
+const Coordinate Graph::getOffsetAt( NeighborDirection a_direction ) const
+{
 	const Coordinate TOP_LEFT_OFFSET( -1, -1 );
 	const Coordinate TOP_OFFSET( 0, -1 );
 	const Coordinate TOP_RIGHT_OFFSET( 1, -1 );
@@ -74,7 +95,7 @@ void Graph::connectNodes()
 	const Coordinate BOTTOM_OFFSET( 0, 1 );
 	const Coordinate BOTTOM_RIGHT_OFFSET( 1, 1 );
 	
-	Coordinate OFFSETS[ Node::MAX_NEIGHBORS ] =
+	const Coordinate OFFSETS[ Node::MAX_NEIGHBORS ] =
 	{
 		TOP_LEFT_OFFSET,
 		TOP_OFFSET,
@@ -86,22 +107,7 @@ void Graph::connectNodes()
 		BOTTOM_RIGHT_OFFSET,
 	};
 
-	for( int x = 0; x < width; ++x )
-	{
-		for( int y = 0; y < height; ++y )
-		{
-			Node* pCurrentNode = pNodes[ x ][ y ];
-			markInvalidNeighbors( *pCurrentNode, x, y );
-
-			for( int i = 0; i < Node::MAX_NEIGHBORS; ++i )
-			{
-				Coordinate currentOffset = OFFSETS[ i ];
-				pCurrentNode->setNeighbor( currentOffset.getX(),
-										   currentOffset.getY(),
-										   NeighborDirection( i ) );
-			}
-		}
-	}
+	return OFFSETS[ a_direction ];
 }
 
 bool Graph::isOnTop( int y ) const 

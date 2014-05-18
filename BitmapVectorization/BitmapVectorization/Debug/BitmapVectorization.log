@@ -1,4 +1,4 @@
-﻿Build started 5/17/2014 10:48:34 PM.
+﻿Build started 5/17/2014 11:01:59 PM.
      1>Project "C:\Users\Cailin\git\bitmapVectorization\BitmapVectorization\BitmapVectorization\BitmapVectorization.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\BitmapVectorization.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -21,4 +21,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.37
+Time Elapsed 00:00:02.34

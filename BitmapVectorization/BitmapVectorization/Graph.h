@@ -24,5 +24,6 @@ private:
 	bool isOnBottom( int ) const;
 	bool isOnLeft( int ) const;
 	bool isOnRight( int ) const;
+	const Coordinate getOffsetAt( NeighborDirection ) const;
 	void markInvalidNeighbors( Node&, int, int );
 };
