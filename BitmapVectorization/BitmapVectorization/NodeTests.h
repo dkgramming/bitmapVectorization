@@ -29,7 +29,7 @@ void testGetNeighborCount()
 	bool neighborsFilled = ( nodeA.getNeighborCount() == 8 );
 	assert( neighborsFilled );
 
-	nodeA.setNeighbor( -1, -1, NeighborDirection::LEFT );
+	nodeA.severConnection( NeighborDirection::LEFT );
 	bool neighborRemoved = ( nodeA.getNeighborCount() == 7 );
 	assert( neighborRemoved );
 }
@@ -102,30 +102,10 @@ void testSeverConnection()
 	assert( allNeighborsDead );
 }
 
-void testValidation()
-{
-	Node node;
-
-	// Invalidate all neighbor nodes
-	for( auto index = 0u; index < Node::MAX_NEIGHBORS; ++index )
-	{
-		node.severConnection( NeighborDirection( index ) );
-	}
-
-	// All neighbors should be invalid
-	for( auto index = 0u; index < Node::MAX_NEIGHBORS; ++index )
-	{
-		bool invalid = !( node.isValid( NeighborDirection( index ) ) );
-
-		assert( invalid );
-	}
-}
-
 void runNodeTests()
 {
 	testGetNeighborCount();
 	testIsSimilar();
 	testSeverConnection();
-	testValidation();
 	std::cout << "Node tests passed!" << std::endl;
 }

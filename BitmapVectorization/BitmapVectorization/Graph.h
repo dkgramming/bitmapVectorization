@@ -15,6 +15,7 @@ public:
 	int getNumCols() const;
 
 	void severDissimilarNodes();
+	void print() const;
 
 private:
 	Node*** pNodes;

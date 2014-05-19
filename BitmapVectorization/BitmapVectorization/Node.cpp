@@ -6,6 +6,7 @@ using namespace std;
 Node::Node(void)
 {
 	neighbors = new Coordinate*[ MAX_NEIGHBORS ];
+	neighborCount = 0;
 
 	// Set default neighbor indices to -1
 	for( int i = 0; i < MAX_NEIGHBORS; ++i )
@@ -59,8 +60,15 @@ bool Node::isSimilar( const Node* otherNode ) const
  */
 void Node::severConnection( NeighborDirection direction )
 {
-	neighbors[ direction ]->setX( SEVERED );
-	neighbors[ direction ]->setY( SEVERED );
+	bool connected = ( neighbors[ direction ]->getX() >= 0 || neighbors[ direction ]->getY() >= 0 );
+
+	if( connected )
+	{
+		neighbors[ direction ]->setX( SEVERED );
+		neighbors[ direction ]->setY( SEVERED );
+		
+		--neighborCount;
+	}
 }
 
 /**
@@ -109,10 +117,14 @@ Coordinate Node::getNeighborCoord( NeighborDirection direction )
 
 void Node::setNeighbor( int graphNeighborXIndex, int graphNeighborYIndex, NeighborDirection direction )
 {
-	if ( isValid( direction ) )
+	bool notConnected = neighbors[ direction ]->getX() < 0 || neighbors[ direction ]->getY() < 0;
+
+	if ( isValid( direction ) && notConnected )
 	{
 		neighbors[ direction ]->setX( graphNeighborXIndex );
 		neighbors[ direction ]->setY( graphNeighborYIndex );
+
+		++neighborCount;
 	}
 }
 
@@ -121,7 +133,7 @@ void Node::setNeighbor( int graphNeighborXIndex, int graphNeighborYIndex, Neighb
  */
 int Node::getNeighborCount() const
 {
-	int size = 0;
+	/*int size = 0;
 
 	for( int i = 0; i < MAX_NEIGHBORS; ++i )
 	{
@@ -131,7 +143,9 @@ int Node::getNeighborCount() const
 		}
 	}
 
-	return size;
+	return size;*/
+
+	return neighborCount;
 }
 
 /**
@@ -152,7 +166,7 @@ void Node::setColor( Color newColor )
 
 void Node::printRgb() const
 {
-	cout << "R: " << color.getR() << "\tG: " << color.getG() << "\tB: " << color.getB() << endl;
+	cout << "R: " << color.getR() << "\tG: " << color.getG() << "\tB: " << color.getB();
 }
 
 void Node::print()

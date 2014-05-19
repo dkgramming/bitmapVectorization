@@ -51,4 +51,5 @@ private:
 
 	Coordinate **neighbors;
 	Color color;
+	int neighborCount;
 };

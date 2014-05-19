@@ -90,11 +90,6 @@ void Graph::severDissimilarNodes()
 					}
 				}
 			}
-
-			if( x == 0 )
-			{
-				pCurrentNode->print();
-			}
 		}
 	}
 }
@@ -198,4 +193,20 @@ void Graph::markInvalidNeighbors( Node& currentNode, int x, int y )
 		currentNode.severConnection( NeighborDirection::RIGHT );
 		currentNode.severConnection( NeighborDirection::BOTTOM_RIGHT );
 	}
+}
+
+void Graph::print() const
+{
+	char input;
+	for( int y = 0; y < height; ++y )
+	{
+		for( int x = 0; x < width; ++x )
+		{
+			Node* pCurrentNode = pNodes[ x ][ y ];
+			cout << pCurrentNode->getNeighborCount();
+			cout << " ";
+		}
+		cout << endl;
+	}
+	cin >> input;
 }
