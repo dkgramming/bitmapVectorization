@@ -27,3 +27,13 @@ void Coordinate::print()
 {
 	cout << "{ " << getX() << ", " << getY() << " }";
 }
+
+bool Coordinate::operator==( const Coordinate& otherCoord )
+{
+	return ( x == otherCoord.getX() && y == otherCoord.getY() );
+}
+
+bool Coordinate::operator!=( const Coordinate& otherCoord )
+{
+	return !( x == otherCoord.getX() && y == otherCoord.getY() );
+}

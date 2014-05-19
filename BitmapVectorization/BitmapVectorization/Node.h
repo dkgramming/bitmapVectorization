@@ -23,6 +23,8 @@ class Node
 {
 public:
 	static const int MAX_NEIGHBORS = 8;
+	static const int DEFAULT = -2;
+	static const int SEVERED = -3;
 
 	Node( void );
 	~Node( void );
@@ -46,9 +48,6 @@ public:
 	void print();
 
 private:
-	static const int DEFAULT = -2;
-	static const int SEVERED = -3;
-
 	Coordinate **neighbors;
 	Color color;
 	int neighborCount;

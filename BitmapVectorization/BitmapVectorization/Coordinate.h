@@ -19,6 +19,9 @@ public:
 
 	void print();
 
+	bool operator==( const Coordinate& );
+	bool operator!=( const Coordinate& );
+
 private:
 	int x;
 	int y;

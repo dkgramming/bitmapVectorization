@@ -98,6 +98,59 @@ void Graph::severDissimilarNodes()
 	}
 }
 
+void Graph::resolveCrossedConnections()
+{
+	const Coordinate SEVERED( Node::SEVERED, Node::SEVERED );
+
+	for( int x = 0; x < width - 1; ++x )
+	{
+		for( int y = 0; y < height - 1; ++y )
+		{
+			Node* pCurrentNode = pNodes[ x ][ y ];
+			Node* pRightNode = pNodes[ x + 1 ][ y ];
+
+			// Check for cross
+			Coordinate currentBottomRight = pCurrentNode->getNeighborCoord( NeighborDirection::BOTTOM_RIGHT );
+			Coordinate rightBottomLeft = pRightNode->getNeighborCoord( NeighborDirection::BOTTOM_LEFT );
+
+			bool topLeftToBottomRight = ( currentBottomRight != SEVERED );
+			bool topRightToBottomLeft = ( rightBottomLeft != SEVERED );
+
+			bool isCrossed = ( topLeftToBottomRight && topRightToBottomLeft );
+
+			if( isCrossed )
+			{
+				Node* pBottomNode = pNodes[ x ][ y + 1 ];
+
+				// Check for verticals and horizontals around cross
+				Coordinate currentRight = pCurrentNode->getNeighborCoord( NeighborDirection::RIGHT );
+				Coordinate currentBottom = pCurrentNode->getNeighborCoord( NeighborDirection::BOTTOM );
+				Coordinate rightBottom = pRightNode->getNeighborCoord( NeighborDirection::BOTTOM );
+				Coordinate bottomRight = pBottomNode->getNeighborCoord( NeighborDirection::RIGHT );
+
+				bool topLeftToTopRight = ( currentRight != SEVERED );
+				bool topLeftToBottomLeft = ( currentBottom != SEVERED );
+				bool topRightToBottomRight = ( rightBottom != SEVERED );
+				bool bottomLeftToBottomRight = ( bottomRight != SEVERED );
+
+				bool isBoxed = ( topLeftToTopRight && topLeftToBottomLeft && topRightToBottomRight && bottomLeftToBottomRight );
+				
+				if( isBoxed )
+				{
+					Node* pBottomRightNode = pNodes[ x + 1 ][ y + 1 ];
+
+					// Sever crossed connections
+					pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
+					pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
+
+					pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
+					pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
+				}
+			}
+		}
+	}
+}
+
 void Graph::connectNodes()
 {
 	for( int x = 0; x < width; ++x )

@@ -20,6 +20,8 @@ void runProgram()
 	graph.print();
 	graph.severDissimilarNodes();
 	graph.print();
+	graph.resolveCrossedConnections();
+	graph.print();
 }
 
 int main()

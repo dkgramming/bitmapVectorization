@@ -14,6 +14,7 @@ public:
 	int getNumCols() const;
 
 	void severDissimilarNodes();
+	void resolveCrossedConnections();
 	void print() const;
 
 private:
