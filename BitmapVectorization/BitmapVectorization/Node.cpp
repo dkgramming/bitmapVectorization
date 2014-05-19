@@ -60,7 +60,8 @@ bool Node::isSimilar( const Node* otherNode ) const
  */
 void Node::severConnection( NeighborDirection direction )
 {
-	bool connected = ( neighbors[ direction ]->getX() >= 0 || neighbors[ direction ]->getY() >= 0 );
+	bool connected = ( neighbors[ direction ]->getX() >= DEFAULT ||
+					   neighbors[ direction ]->getY() >= DEFAULT );
 
 	if( connected )
 	{
@@ -74,10 +75,10 @@ void Node::severConnection( NeighborDirection direction )
 /**
  * Checks if a neighbor in the given direction is valid
  */
-bool Node::isValid( NeighborDirection direction ) const
+bool Node::isSevered( NeighborDirection direction ) const
 {
-	return neighbors[ direction ]->getX() != SEVERED ||
-		   neighbors[ direction ]->getY() != SEVERED;
+	return neighbors[ direction ]->getX() == SEVERED ||
+		   neighbors[ direction ]->getY() == SEVERED;
 }
 
 bool Node::neighborExistsAt( NeighborDirection direction ) const
@@ -115,14 +116,14 @@ Coordinate Node::getNeighborCoord( NeighborDirection direction )
 	return *neighbors[ direction ];
 }
 
-void Node::setNeighbor( int graphNeighborXIndex, int graphNeighborYIndex, NeighborDirection direction )
+void Node::setNeighbor( int neighborXOffset, int neighborYOffset, NeighborDirection direction )
 {
 	bool notConnected = neighbors[ direction ]->getX() < 0 || neighbors[ direction ]->getY() < 0;
 
-	if ( isValid( direction ) && notConnected )
+	if ( !isSevered( direction ) && notConnected )
 	{
-		neighbors[ direction ]->setX( graphNeighborXIndex );
-		neighbors[ direction ]->setY( graphNeighborYIndex );
+		neighbors[ direction ]->setX( neighborXOffset );
+		neighbors[ direction ]->setY( neighborYOffset );
 
 		++neighborCount;
 	}
@@ -171,6 +172,7 @@ void Node::printRgb() const
 
 void Node::print()
 {
+	/*
 	for( int i = 0; i < MAX_NEIGHBORS; ++i )
 	{
 		if( i == 3 || i == 5 )
@@ -190,6 +192,22 @@ void Node::print()
 		if( i == 3 )
 		{
 			cout << "N ";
+		}
+	}
+	*/
+	for( int i = 0; i < MAX_NEIGHBORS; ++i )
+	{
+		if( i == 3 || i == 5 )
+		{
+			cout << "\n";
+		}
+
+		neighbors[ i ]->print();
+		cout << " ";
+
+		if( i == 3 )
+		{
+			cout << "X ";
 		}
 	}
 	cout << endl << endl;

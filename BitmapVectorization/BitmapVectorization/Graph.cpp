@@ -89,6 +89,10 @@ void Graph::severDissimilarNodes()
 						pCurrentNode->severConnection( NeighborDirection( i ) );
 					}
 				}
+				else
+				{
+					pCurrentNode->severConnection( NeighborDirection( i ) );
+				}
 			}
 		}
 	}
@@ -101,7 +105,6 @@ void Graph::connectNodes()
 		for( int y = 0; y < height; ++y )
 		{
 			Node* pCurrentNode = pNodes[ x ][ y ];
-			markInvalidNeighbors( *pCurrentNode, x, y );
 
 			for( int i = 0; i < Node::MAX_NEIGHBORS; ++i )
 			{
@@ -159,40 +162,6 @@ bool Graph::isOnLeft( int x ) const
 bool Graph::isOnRight( int x ) const 
 { 
 	return ( x == ( width - 1 ) ); 
-}
-
-/**
- * Confirms invalid nodes for positions off the graph
- */
-void Graph::markInvalidNeighbors( Node& currentNode, int x, int y )
-{
-	if( isOnTop( y ) )
-	{
-		currentNode.severConnection( NeighborDirection::TOP_LEFT );
-		currentNode.severConnection( NeighborDirection::TOP );
-		currentNode.severConnection( NeighborDirection::TOP_RIGHT );
-	}
-
-	if( isOnBottom( y ) )
-	{
-		currentNode.severConnection( NeighborDirection::BOTTOM_LEFT );
-		currentNode.severConnection( NeighborDirection::BOTTOM );
-		currentNode.severConnection( NeighborDirection::BOTTOM_RIGHT );
-	}
-
-	if( isOnLeft( x ) )
-	{
-		currentNode.severConnection( NeighborDirection::TOP_LEFT );
-		currentNode.severConnection( NeighborDirection::LEFT );
-		currentNode.severConnection( NeighborDirection::BOTTOM_LEFT );
-	}
-
-	if( isOnRight( x ) )
-	{
-		currentNode.severConnection( NeighborDirection::TOP_RIGHT );
-		currentNode.severConnection( NeighborDirection::RIGHT );
-		currentNode.severConnection( NeighborDirection::BOTTOM_RIGHT );
-	}
 }
 
 void Graph::print() const

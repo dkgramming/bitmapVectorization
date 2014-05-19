@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Node.h"
-#include "RAWImage.h"
 
 class Graph
 {
@@ -28,5 +27,4 @@ private:
 	bool isOnLeft( int ) const;
 	bool isOnRight( int ) const;
 	const Coordinate getOffsetAt( NeighborDirection ) const;
-	void markInvalidNeighbors( Node&, int, int );
 };

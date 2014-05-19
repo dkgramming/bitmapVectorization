@@ -29,7 +29,7 @@ public:
 
 	bool isSimilar( const Node* ) const;
 	void severConnection( NeighborDirection );
-	bool isValid( NeighborDirection ) const;
+	bool isSevered( NeighborDirection ) const;
 	bool neighborExistsAt( NeighborDirection ) const;
 	static const float maxDeltaY();
 	static const float maxDeltaU();

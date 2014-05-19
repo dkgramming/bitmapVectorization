@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "ImageLoader.h"
-#include "RawImage.h"
 #include "Graph.h"
 
 void testLoadImage()

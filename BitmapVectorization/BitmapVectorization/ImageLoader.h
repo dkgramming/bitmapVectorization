@@ -1,6 +1,5 @@
 #pragma once
 
-#include "RawImage.h"
 #include "Graph.h"
 
 class ImageLoader
