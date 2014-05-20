@@ -15,7 +15,7 @@ void runProgram()
 	ImageLoader loader;
 	Graph graph( 4, 4 );
 
-	loader.loadImage( "Images/test2.raw", graph );
+	loader.loadImage( "Images/test3.raw", graph );
 
 	graph.print();
 	graph.severDissimilarNodes();

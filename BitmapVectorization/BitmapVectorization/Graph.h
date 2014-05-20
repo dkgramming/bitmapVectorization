@@ -33,4 +33,5 @@ private:
 	int traverseCurve( Node*, Node* ) const;
 	void resetCurve( Node*, Node* ) const;
 	int getIslandWeight( Node*, Node*, Node*, Node* );
+	int getSparsenessWeight( Node*, Node* );
 };

@@ -166,6 +166,20 @@ void Graph::resolveCrossedConnections()
 				{
 					Node* pBottomRightNode = pNodes[ x + 1 ][ y + 1 ];
 
+					int sparsenessWeight = getSparsenessWeight( pCurrentNode, pRightNode );
+
+					if( sparsenessWeight > 0 )
+					{
+						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
+						pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
+					}
+					else
+					{
+						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
+						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
+					}
+
+					/*
 					// Islands heuristic
 					int islandWeight = getIslandWeight( pCurrentNode, pBottomRightNode, pRightNode, pBottomNode );
 
@@ -179,6 +193,7 @@ void Graph::resolveCrossedConnections()
 						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
 						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
 					}
+					*/
 
 					/*
 					// Curve heuristic
@@ -386,27 +401,27 @@ void Graph::resetCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 /**
  * Calculates the weight associated with the island heuristic
  */
-int Graph::getIslandWeight( Node* posCurrentNode, Node* posNeighborNode, Node* negCurrentNode, Node* negNeighborNode )
+int Graph::getIslandWeight( Node* a_pPosCurrentNode, Node* a_pPosNeighborNode, Node* a_pNegCurrentNode, Node* a_pNegNeighborNode )
 {
 	int positiveWeight = 0;
 	int negativeWeight = 0;
 
-	if( posCurrentNode->getNeighborCount() == 1 )
+	if( a_pPosCurrentNode->getNeighborCount() == 1 )
 	{
 		positiveWeight += 5;
 	}
 
-	if( posNeighborNode->getNeighborCount() == 1 )
+	if( a_pPosNeighborNode->getNeighborCount() == 1 )
 	{
 		positiveWeight += 5;
 	}
 
-	if( negCurrentNode->getNeighborCount() == 1 )
+	if( a_pNegCurrentNode->getNeighborCount() == 1 )
 	{
 		negativeWeight += 5;
 	}
 
-	if( negNeighborNode->getNeighborCount() == 1 )
+	if( a_pNegNeighborNode->getNeighborCount() == 1 )
 	{
 		negativeWeight += 5;
 	}
@@ -414,4 +429,44 @@ int Graph::getIslandWeight( Node* posCurrentNode, Node* posNeighborNode, Node* n
 	int totalIslandWeight = positiveWeight - negativeWeight;
 
 	return totalIslandWeight;
+}
+
+/**
+ * Calculates the weight associated with the sparseness heuristic
+ */
+int Graph::getSparsenessWeight( Node* a_pCurrentNode, Node* a_pNeighborNode )
+{
+	const int currentX = a_pCurrentNode->getX();
+	const int currentY = a_pCurrentNode->getY();
+
+	int positiveWeight = 0;
+	int negativeWeight = 0;
+
+
+	const int INITIAL_X = ( currentX - 1 >= 0 ) ? currentX - 1 : 0;
+	const int INITIAL_Y = ( currentY - 1 >= 0 ) ? currentY - 1 : 0;
+	const int X_MAX = ( currentX + 2 < width ) ? currentX + 2 : width - 1;
+	const int Y_MAX = ( currentY + 2 < height ) ? currentY + 2 : height - 1;
+
+	for( int x = INITIAL_X; x <= X_MAX; ++x )
+	{
+		for( int y = INITIAL_Y; y <= Y_MAX; ++y )
+		{
+			Node* nodeToCheck = pNodes[ x ][ y ];
+
+			if( a_pCurrentNode->isSimilar( nodeToCheck ) )
+			{
+				++positiveWeight;
+			}
+			
+			if( a_pNeighborNode->isSimilar( nodeToCheck ) )
+			{
+				++negativeWeight;
+			}
+		}
+	}
+
+	int totalSparsenessWeight = positiveWeight - negativeWeight;
+	
+	return totalSparsenessWeight;
 }
