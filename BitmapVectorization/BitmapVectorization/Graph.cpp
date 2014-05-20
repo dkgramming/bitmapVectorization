@@ -287,13 +287,18 @@ void Graph::print() const
 	cin >> input;
 }
 
-int Graph::traverseCurve( Node* currentNode, Node* currentNeighbor ) const
+/**
+ * Recursively traverses a 'curve' in the graph and determines its length
+ *
+ * TODO: Come up with a more appropriate name
+ */
+int Graph::traverseCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 {
 	int length = 0;
 
-	if( currentNode->getNeighborCount() == 2 && !currentNode->getTraversed() )
+	if( a_pCurrentNode->getNeighborCount() == 2 && !a_pCurrentNode->getTraversed() )
 	{
-		currentNode->setTraversal( true );
+		a_pCurrentNode->setTraversal( true );
 
 		int nextOffsetIndex = 0;
 		Coordinate nextNeighborOffset;
@@ -301,19 +306,19 @@ int Graph::traverseCurve( Node* currentNode, Node* currentNeighbor ) const
 
 		do
 		{
-			nextNeighborOffset = currentNode->getNextNeighbor( nextOffsetIndex );
-			int nextNeighborX = currentNode->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = currentNode->getY() + nextNeighborOffset.getY();
+			nextNeighborOffset = a_pCurrentNode->getNextNeighbor( nextOffsetIndex );
+			int nextNeighborX = a_pCurrentNode->getX() + nextNeighborOffset.getX();
+			int nextNeighborY = a_pCurrentNode->getY() + nextNeighborOffset.getY();
 			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
 			++nextOffsetIndex;
 		}
-		while( nextNeighbor == currentNeighbor );
-		length += traverseCurve( nextNeighbor, currentNode );
+		while( nextNeighbor == a_pCurrentNeighbor );
+		length += traverseCurve( nextNeighbor, a_pCurrentNode );
 	}
 
-	if( currentNeighbor->getNeighborCount() == 2 && !currentNeighbor->getTraversed() )
+	if( a_pCurrentNeighbor->getNeighborCount() == 2 && !a_pCurrentNeighbor->getTraversed() )
 	{
-		currentNeighbor->setTraversal( true );
+		a_pCurrentNeighbor->setTraversal( true );
 
 		int nextOffsetIndex = 0;
 		Coordinate nextNeighborOffset;
@@ -321,24 +326,29 @@ int Graph::traverseCurve( Node* currentNode, Node* currentNeighbor ) const
 
 		do
 		{
-			nextNeighborOffset = currentNeighbor->getNextNeighbor( nextOffsetIndex );
-			int nextNeighborX = currentNeighbor->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = currentNeighbor->getY() + nextNeighborOffset.getY();
+			nextNeighborOffset = a_pCurrentNeighbor->getNextNeighbor( nextOffsetIndex );
+			int nextNeighborX = a_pCurrentNeighbor->getX() + nextNeighborOffset.getX();
+			int nextNeighborY = a_pCurrentNeighbor->getY() + nextNeighborOffset.getY();
 			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
 			++nextOffsetIndex;
 		}
-		while( nextNeighbor == currentNode );
-		length += traverseCurve( currentNeighbor, nextNeighbor );
+		while( nextNeighbor == a_pCurrentNode );
+		length += traverseCurve( a_pCurrentNeighbor, nextNeighbor );
 	}
 
 	return length + 1;
 }
 
-void Graph::resetCurve( Node* currentNode, Node* currentNeighbor ) const
+/**
+ * Recursively traverses a 'curve' in the graph and resets the traveresed variable to false
+ *
+ * TODO: Come up with a more appropriate name
+ */
+void Graph::resetCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 {
-	if( currentNode->getNeighborCount() == 2 && currentNode->getTraversed() )
+	if( a_pCurrentNode->getNeighborCount() == 2 && a_pCurrentNode->getTraversed() )
 	{
-		currentNode->setTraversal( false );
+		a_pCurrentNode->setTraversal( false );
 
 		int nextOffsetIndex = 0;
 		Coordinate nextNeighborOffset;
@@ -346,20 +356,20 @@ void Graph::resetCurve( Node* currentNode, Node* currentNeighbor ) const
 
 		do
 		{
-			nextNeighborOffset = currentNode->getNextNeighbor( nextOffsetIndex );
-			int nextNeighborX = currentNode->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = currentNode->getY() + nextNeighborOffset.getY();
+			nextNeighborOffset = a_pCurrentNode->getNextNeighbor( nextOffsetIndex );
+			int nextNeighborX = a_pCurrentNode->getX() + nextNeighborOffset.getX();
+			int nextNeighborY = a_pCurrentNode->getY() + nextNeighborOffset.getY();
 			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
 			++nextOffsetIndex;
 		}
-		while( nextNeighbor == currentNeighbor );
+		while( nextNeighbor == a_pCurrentNeighbor );
 
-		resetCurve(nextNeighbor, currentNode );
+		resetCurve(nextNeighbor, a_pCurrentNode );
 	}
 
-	if( currentNeighbor->getNeighborCount() == 2 && currentNeighbor->getTraversed() )
+	if( a_pCurrentNeighbor->getNeighborCount() == 2 && a_pCurrentNeighbor->getTraversed() )
 	{
-		currentNeighbor->setTraversal( false );
+		a_pCurrentNeighbor->setTraversal( false );
 
 		int nextOffsetIndex = 0;
 		Coordinate nextNeighborOffset;
@@ -367,14 +377,14 @@ void Graph::resetCurve( Node* currentNode, Node* currentNeighbor ) const
 
 		do
 		{
-			nextNeighborOffset = currentNeighbor->getNextNeighbor( nextOffsetIndex );
-			int nextNeighborX = currentNeighbor->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = currentNeighbor->getY() + nextNeighborOffset.getY();
+			nextNeighborOffset = a_pCurrentNeighbor->getNextNeighbor( nextOffsetIndex );
+			int nextNeighborX = a_pCurrentNeighbor->getX() + nextNeighborOffset.getX();
+			int nextNeighborY = a_pCurrentNeighbor->getY() + nextNeighborOffset.getY();
 			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
 			++nextOffsetIndex;
 		}
-		while( nextNeighbor == currentNode );
-		resetCurve( currentNeighbor, nextNeighbor );
+		while( nextNeighbor == a_pCurrentNode );
+		resetCurve( a_pCurrentNeighbor, nextNeighbor );
 	} 
 }
 
