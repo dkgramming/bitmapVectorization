@@ -13,9 +13,12 @@ public:
 	int getNumRows() const;
 	int getNumCols() const;
 
+	Node* getNodeAt( int, int ) const;
+
 	void severDissimilarNodes();
 	void severDissimilarNeighbors( int, int );
 	void resolveCrossedConnections();
+	void resetCurve( Node*, Node* ) const;
 	void print() const;
 
 private:
@@ -31,7 +34,7 @@ private:
 	int getBranchLength( Node*, Node* ) const;
 	const Coordinate getOffsetAt( NeighborDirection ) const;
 	int traverseCurve( Node*, Node* ) const;
-	void resetCurve( Node*, Node* ) const;
-	int getIslandWeight( Node*, Node*, Node*, Node* );
-	int getSparsenessWeight( Node*, Node* );
+	int getIslandVote( Node*, Node*, Node*, Node* );
+	int getSparsenessVote( Node*, Node* );
+	int getCurveVote( Node*, Node*, Node*, Node* );
 };

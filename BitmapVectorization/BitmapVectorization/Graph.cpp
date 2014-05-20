@@ -63,6 +63,11 @@ int Graph::getNumCols() const
 	return width;
 }
 
+Node* Graph::getNodeAt( int a_x, int a_y ) const
+{
+	return pNodes[ a_x ][ a_y ];
+}
+
 /**
  * Iterates through graph and tells each node to sever its dissimilar neighbors
  */
@@ -166,56 +171,32 @@ void Graph::resolveCrossedConnections()
 				{
 					Node* pBottomRightNode = pNodes[ x + 1 ][ y + 1 ];
 
-					int sparsenessWeight = getSparsenessWeight( pCurrentNode, pRightNode );
+					// Sparseness heuristic
+					int sparsenessVote = getSparsenessVote( pCurrentNode, pRightNode );
+					const float SPARSENESS_WEIGHT = 1;
 
-					if( sparsenessWeight > 0 )
-					{
-						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
-						pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
-					}
-					else
-					{
-						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
-						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
-					}
-
-					/*
 					// Islands heuristic
-					int islandWeight = getIslandWeight( pCurrentNode, pBottomRightNode, pRightNode, pBottomNode );
+					int islandVote = getIslandVote( pCurrentNode, pBottomRightNode, pRightNode, pBottomNode );
+					const float ISLAND_WEIGHT = 5;
 
-					if( islandWeight < 0 )
-					{
-						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
-						pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
-					}
-					else
-					{
-						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
-						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
-					}
-					*/
-
-					/*
 					// Curve heuristic
-					int positiveCurveLength = traverseCurve( pCurrentNode, pBottomRightNode );
-					resetCurve( pCurrentNode, pBottomRightNode );
+					int curveVote = getCurveVote( pCurrentNode, pBottomRightNode, pRightNode, pBottomNode );
+					const float CURVE_WEIGHT = .01f;
 
-					int negativeCurveLength = ( -1 * traverseCurve( pRightNode, pBottomNode ) );
-					resetCurve( pRightNode, pBottomNode );
+					float weightedVote = ( sparsenessVote * SPARSENESS_WEIGHT ) +
+									   ( islandVote * ISLAND_WEIGHT ) +
+									   ( curveVote * CURVE_WEIGHT );
 
-					int curveWeight = positiveCurveLength + negativeCurveLength;
-
-					if( curveWeight < 0 )
-					{
-						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
-						pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
-					}
-					else
+					if( weightedVote >= 0 )
 					{
 						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
 						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
 					}
-					*/
+					else
+					{
+						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
+						pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
+					}
 				}
 			}
 		}
@@ -264,8 +245,10 @@ int Graph::getBranchLength( Node* a_pOrigin, Node* a_pCross ) const
 		}
 		while( nextNeighbor == a_pCross );
 
-		return traverseCurve( nextNeighbor, a_pOrigin );
+		return 1 + getBranchLength( nextNeighbor, a_pOrigin );
 	}
+	a_pOrigin->setTraversal( true );
+	return 0;
 }
 
 // TODO: Make this more static
@@ -343,8 +326,12 @@ int Graph::traverseCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 {
 	int length = 0;
 
-	length += getBranchLength( a_pCurrentNode, a_pCurrentNeighbor );
-	length += getBranchLength( a_pCurrentNeighbor, a_pCurrentNode );
+	int firstLength = getBranchLength( a_pCurrentNode, a_pCurrentNeighbor );
+	int secondLength = getBranchLength( a_pCurrentNeighbor, a_pCurrentNode );
+
+	resetCurve( a_pCurrentNode, a_pCurrentNeighbor );
+
+	length = firstLength + secondLength;
 
 	return length + 1;
 }
@@ -356,6 +343,7 @@ int Graph::traverseCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
  */
 void Graph::resetCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 {
+	/*
 	if( a_pCurrentNode->getNeighborCount() == 2 && a_pCurrentNode->getTraversed() )
 	{
 		a_pCurrentNode->setTraversal( false );
@@ -396,51 +384,61 @@ void Graph::resetCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 		while( nextNeighbor == a_pCurrentNode );
 		resetCurve( a_pCurrentNeighbor, nextNeighbor );
 	} 
+	*/
+	
+	for( int y = 0; y < height; ++y )
+	{
+		for( int x = 0; x < width; ++x )
+		{
+			Node* pCurrentNode = pNodes[ x ][ y ];
+			pCurrentNode->setTraversal(false);
+		}
+	}
 }
 
 /**
  * Calculates the weight associated with the island heuristic
  */
-int Graph::getIslandWeight( Node* a_pPosCurrentNode, Node* a_pPosNeighborNode, Node* a_pNegCurrentNode, Node* a_pNegNeighborNode )
+int Graph::getIslandVote( Node* a_pPosCurrentNode, Node* a_pPosNeighborNode, Node* a_pNegCurrentNode, Node* a_pNegNeighborNode )
 {
-	int positiveWeight = 0;
-	int negativeWeight = 0;
+	int positiveVote = 0;
+	int negativeVote = 0;
 
 	if( a_pPosCurrentNode->getNeighborCount() == 1 )
 	{
-		positiveWeight += 5;
+		positiveVote += 1;
 	}
 
 	if( a_pPosNeighborNode->getNeighborCount() == 1 )
 	{
-		positiveWeight += 5;
+		positiveVote += 1;
 	}
 
 	if( a_pNegCurrentNode->getNeighborCount() == 1 )
 	{
-		negativeWeight += 5;
+		negativeVote += 1;
 	}
 
 	if( a_pNegNeighborNode->getNeighborCount() == 1 )
 	{
-		negativeWeight += 5;
+		negativeVote += 1;
 	}
 
-	int totalIslandWeight = positiveWeight - negativeWeight;
+	int islandVote = positiveVote - negativeVote;
 
-	return totalIslandWeight;
+	return islandVote;
 }
 
 /**
  * Calculates the weight associated with the sparseness heuristic
  */
-int Graph::getSparsenessWeight( Node* a_pCurrentNode, Node* a_pNeighborNode )
+int Graph::getSparsenessVote( Node* a_pCurrentNode, Node* a_pNeighborNode )
 {
 	const int currentX = a_pCurrentNode->getX();
 	const int currentY = a_pCurrentNode->getY();
 
-	int positiveWeight = 0;
-	int negativeWeight = 0;
+	int positiveVote = 0;
+	int negativeVote = 0;
 
 
 	const int INITIAL_X = ( currentX - 1 >= 0 ) ? currentX - 1 : 0;
@@ -456,17 +454,28 @@ int Graph::getSparsenessWeight( Node* a_pCurrentNode, Node* a_pNeighborNode )
 
 			if( a_pCurrentNode->isSimilar( nodeToCheck ) )
 			{
-				++positiveWeight;
+				++positiveVote;
 			}
 			
 			if( a_pNeighborNode->isSimilar( nodeToCheck ) )
 			{
-				++negativeWeight;
+				++negativeVote;
 			}
 		}
 	}
 
-	int totalSparsenessWeight = positiveWeight - negativeWeight;
+	int sparsenessVote = negativeVote - positiveVote;
 	
-	return totalSparsenessWeight;
+	return sparsenessVote;
+}
+
+int Graph::getCurveVote( Node* a_pPosCurrentNode, Node* a_pPosNeighborNode, Node* a_pNegCurrentNode, Node* a_pNegNeighborNode )
+{
+	int positiveCurveLength = traverseCurve( a_pPosCurrentNode, a_pPosNeighborNode );
+
+	int negativeCurveLength = traverseCurve( a_pNegCurrentNode, a_pNegNeighborNode );
+
+	int curveVote = positiveCurveLength - negativeCurveLength;
+
+	return curveVote;
 }
