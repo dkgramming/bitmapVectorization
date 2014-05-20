@@ -63,41 +63,55 @@ int Graph::getNumCols() const
 	return width;
 }
 
+/**
+ * Iterates through graph and tells each node to sever its dissimilar neighbors
+ */
 void Graph::severDissimilarNodes()
 {
 	for( int x = 0; x < width; ++x )
 	{
 		for( int y = 0; y < height; ++y )
 		{
-			Node* pCurrentNode = pNodes[ x ][ y ];
-
-			for( int i = 0; i < Node::MAX_NEIGHBORS; ++i )
-			{
-				Coordinate currentOffset = getOffsetAt( NeighborDirection( i ) );
-				int neighborX = ( x + currentOffset.getX() );
-				int neighborY = ( y + currentOffset.getY() );
-
-				bool nonNegative = ( neighborX >= 0 && neighborY >= 0 );
-				bool inRange = ( neighborX < getNumCols() && neighborY < getNumRows() );
-
-				if( nonNegative && inRange )
-				{
-					bool isSimilar = pCurrentNode->isSimilar( pNodes[ neighborX ][ neighborY ] );
-					
-					if( !isSimilar )
-					{
-						pCurrentNode->severConnection( NeighborDirection( i ) );
-					}
-				}
-				else
-				{
-					pCurrentNode->severConnection( NeighborDirection( i ) );
-				}
-			}
+			severDissimilarNeighbors( x, y );
 		}
 	}
 }
 
+/**
+ * Iterates through neighbors and severs connections to dissimilar ones
+ */
+void Graph::severDissimilarNeighbors( int a_x, int a_y )
+{
+	Node* pCurrentNode = pNodes[ a_x ][ a_y ];
+
+	for( int i = 0; i < Node::MAX_NEIGHBORS; ++i )
+	{
+		Coordinate currentOffset = getOffsetAt( NeighborDirection( i ) );
+		int neighborX = ( a_x + currentOffset.getX() );
+		int neighborY = ( a_y + currentOffset.getY() );
+
+		bool nonNegative = ( neighborX >= 0 && neighborY >= 0 );
+		bool inRange = ( neighborX < getNumCols() && neighborY < getNumRows() );
+
+		if( nonNegative && inRange )
+		{
+			bool isSimilar = pCurrentNode->isSimilar( pNodes[ neighborX ][ neighborY ] );
+			
+			if( !isSimilar )
+			{
+				pCurrentNode->severConnection( NeighborDirection( i ) );
+			}
+		}
+		else
+		{
+			pCurrentNode->severConnection( NeighborDirection( i ) );
+		}
+	}
+}
+
+/**
+ * Removes overlapping connections in order to 'flatten', i.e. make it planar
+ */
 void Graph::resolveCrossedConnections()
 {
 	const Coordinate SEVERED( Node::SEVERED, Node::SEVERED );
