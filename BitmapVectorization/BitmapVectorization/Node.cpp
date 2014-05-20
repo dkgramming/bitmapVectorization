@@ -3,8 +3,11 @@
 
 using namespace std;
 
-Node::Node(void)
+Node::Node( int a_x, int a_y )
 {
+	x = a_x;
+	y = a_y;
+
 	neighbors = new Coordinate*[ MAX_NEIGHBORS ];
 	neighborCount = 0;
 
@@ -13,6 +16,8 @@ Node::Node(void)
 	{
 		neighbors[ i ] = new Coordinate( DEFAULT, DEFAULT );
 	}
+
+	setTraversal( false );
 }
 
 Node::~Node(void)
@@ -87,6 +92,24 @@ bool Node::neighborExistsAt( NeighborDirection direction ) const
 		   neighbors[ direction ]->getY() >= 0;
 }
 
+Coordinate Node::getNextNeighbor( int offset )
+{
+	Coordinate severedNode( SEVERED, SEVERED );
+	int neighborsChecked = 0;
+	for( int i = 0; i < MAX_NEIGHBORS; ++i )
+	{
+		if( *neighbors[ i ] != severedNode )
+		{
+			if( neighborsChecked == offset )
+			{
+				return Coordinate( neighbors[ i ]->getX(), neighbors[ i ]->getY() );
+			}
+			++neighborsChecked;
+		}
+	}
+	return severedNode;
+}
+
 /**
  * Provides float constant representing the maximum delta Y value
  */
@@ -134,18 +157,6 @@ void Node::setNeighbor( int neighborXOffset, int neighborYOffset, NeighborDirect
  */
 int Node::getNeighborCount() const
 {
-	/*int size = 0;
-
-	for( int i = 0; i < MAX_NEIGHBORS; ++i )
-	{
-		if( neighborExistsAt( NeighborDirection( i ) ) )
-		{
-			++size;
-		}
-	}
-
-	return size;*/
-
 	return neighborCount;
 }
 
@@ -163,6 +174,26 @@ Color Node::getColor() const
 void Node::setColor( Color newColor )
 {
 	color = newColor;
+}
+
+int Node::getX()
+{
+	return x;
+}
+
+int Node::getY()
+{
+	return y;
+}
+
+bool Node::getTraversed()
+{
+	return traversed;
+}
+
+void Node::setTraversal( bool a_traversed )
+{
+	traversed = a_traversed;
 }
 
 void Node::printRgb() const

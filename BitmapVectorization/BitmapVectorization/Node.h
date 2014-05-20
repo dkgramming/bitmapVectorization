@@ -26,13 +26,14 @@ public:
 	static const int DEFAULT = -2;
 	static const int SEVERED = -3;
 
-	Node( void );
+	Node( int x = DEFAULT, int y = DEFAULT );
 	~Node( void );
 
 	bool isSimilar( const Node* ) const;
 	void severConnection( NeighborDirection );
 	bool isSevered( NeighborDirection ) const;
 	bool neighborExistsAt( NeighborDirection ) const;
+	Coordinate getNextNeighbor( int );
 	static const float maxDeltaY();
 	static const float maxDeltaU();
 	static const float maxDeltaV();
@@ -43,6 +44,12 @@ public:
 	Color getColor() const;
 	void setColor( Color );
 
+	int getX();
+	int getY();
+
+	bool getTraversed();
+	void setTraversal( bool );
+
 	void printRgb() const;
 
 	void print();
@@ -50,5 +57,8 @@ public:
 private:
 	Coordinate **neighbors;
 	Color color;
+	int x;
+	int y;
 	int neighborCount;
+	bool traversed;
 };
