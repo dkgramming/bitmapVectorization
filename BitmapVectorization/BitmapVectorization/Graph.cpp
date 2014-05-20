@@ -111,6 +111,8 @@ void Graph::severDissimilarNeighbors( int a_x, int a_y )
 
 /**
  * Removes overlapping connections in order to 'flatten', i.e. make it planar
+ *
+ *	TODO: REFACTOR THIS!
  */
 void Graph::resolveCrossedConnections()
 {
@@ -298,6 +300,9 @@ bool Graph::isOnRight( int x ) const
 	return ( x == ( width - 1 ) ); 
 }
 
+/**
+ * Prints a representation of the graph using each of the nodes' neighbor count
+ */
 void Graph::print() const
 {
 	char input;
@@ -378,6 +383,9 @@ void Graph::resetCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 	} 
 }
 
+/**
+ * Calculates the weight associated with the island heuristic
+ */
 int Graph::getIslandWeight( Node* posCurrentNode, Node* posNeighborNode, Node* negCurrentNode, Node* negNeighborNode )
 {
 	int positiveWeight = 0;
