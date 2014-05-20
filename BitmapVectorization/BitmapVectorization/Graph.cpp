@@ -224,6 +224,33 @@ void Graph::connectNodes()
 	}
 }
 
+/**
+ * Recursively calculates the length of a segment of a curve
+ */
+int Graph::getBranchLength( Node* a_pOrigin, Node* a_pCross ) const
+{
+	if( a_pOrigin->getNeighborCount() == 2 && !a_pOrigin->getTraversed() )
+	{
+		a_pOrigin->setTraversal( true );
+
+		int nextOffsetIndex = 0;
+		Coordinate nextNeighborOffset;
+		Node* nextNeighbor;
+
+		do
+		{
+			nextNeighborOffset = a_pOrigin->getNextNeighbor( nextOffsetIndex );
+			int nextNeighborX = a_pOrigin->getX() + nextNeighborOffset.getX();
+			int nextNeighborY = a_pOrigin->getY() + nextNeighborOffset.getY();
+			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
+			++nextOffsetIndex;
+		}
+		while( nextNeighbor == a_pCross );
+
+		return traverseCurve( nextNeighbor, a_pOrigin );
+	}
+}
+
 // TODO: Make this more static
 const Coordinate Graph::getOffsetAt( NeighborDirection a_direction ) const
 {
@@ -296,45 +323,8 @@ int Graph::traverseCurve( Node* a_pCurrentNode, Node* a_pCurrentNeighbor ) const
 {
 	int length = 0;
 
-	if( a_pCurrentNode->getNeighborCount() == 2 && !a_pCurrentNode->getTraversed() )
-	{
-		a_pCurrentNode->setTraversal( true );
-
-		int nextOffsetIndex = 0;
-		Coordinate nextNeighborOffset;
-		Node* nextNeighbor;
-
-		do
-		{
-			nextNeighborOffset = a_pCurrentNode->getNextNeighbor( nextOffsetIndex );
-			int nextNeighborX = a_pCurrentNode->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = a_pCurrentNode->getY() + nextNeighborOffset.getY();
-			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
-			++nextOffsetIndex;
-		}
-		while( nextNeighbor == a_pCurrentNeighbor );
-		length += traverseCurve( nextNeighbor, a_pCurrentNode );
-	}
-
-	if( a_pCurrentNeighbor->getNeighborCount() == 2 && !a_pCurrentNeighbor->getTraversed() )
-	{
-		a_pCurrentNeighbor->setTraversal( true );
-
-		int nextOffsetIndex = 0;
-		Coordinate nextNeighborOffset;
-		Node* nextNeighbor;
-
-		do
-		{
-			nextNeighborOffset = a_pCurrentNeighbor->getNextNeighbor( nextOffsetIndex );
-			int nextNeighborX = a_pCurrentNeighbor->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = a_pCurrentNeighbor->getY() + nextNeighborOffset.getY();
-			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
-			++nextOffsetIndex;
-		}
-		while( nextNeighbor == a_pCurrentNode );
-		length += traverseCurve( a_pCurrentNeighbor, nextNeighbor );
-	}
+	length += getBranchLength( a_pCurrentNode, a_pCurrentNeighbor );
+	length += getBranchLength( a_pCurrentNeighbor, a_pCurrentNode );
 
 	return length + 1;
 }

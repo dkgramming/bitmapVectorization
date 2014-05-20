@@ -28,6 +28,7 @@ private:
 	bool isOnBottom( int ) const;
 	bool isOnLeft( int ) const;
 	bool isOnRight( int ) const;
+	int getBranchLength( Node*, Node* ) const;
 	const Coordinate getOffsetAt( NeighborDirection ) const;
 	int traverseCurve( Node*, Node* ) const;
 	void resetCurve( Node*, Node* ) const;
