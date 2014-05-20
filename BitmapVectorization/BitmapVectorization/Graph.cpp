@@ -120,7 +120,6 @@ void Graph::resolveCrossedConnections()
 
 			if( isCrossed )
 			{
-				cout << "Y = " << ( y + 1 ) << " Height = " << height << endl;
 				Node* pBottomNode = pNodes[ x ][ y + 1 ];
 
 				// Check for verticals and horizontals around cross
