@@ -30,4 +30,5 @@ private:
 	const Coordinate getOffsetAt( NeighborDirection ) const;
 	int traverseCurve( Node*, Node* ) const;
 	void resetCurve( Node*, Node* ) const;
+	int getIslandWeight( Node*, Node*, Node*, Node* );
 };

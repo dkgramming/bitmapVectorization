@@ -150,6 +150,22 @@ void Graph::resolveCrossedConnections()
 				{
 					Node* pBottomRightNode = pNodes[ x + 1 ][ y + 1 ];
 
+					// Islands heuristic
+					int islandWeight = getIslandWeight( pCurrentNode, pBottomRightNode, pRightNode, pBottomNode );
+
+					if( islandWeight < 0 )
+					{
+						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
+						pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
+					}
+					else
+					{
+						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
+						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
+					}
+
+					/*
+					// Curve heuristic
 					int positiveCurveLength = traverseCurve( pCurrentNode, pBottomRightNode );
 					resetCurve( pCurrentNode, pBottomRightNode );
 
@@ -157,7 +173,7 @@ void Graph::resolveCrossedConnections()
 					resetCurve( pRightNode, pBottomNode );
 
 					int curveWeight = positiveCurveLength + negativeCurveLength;
-					
+
 					if( curveWeight < 0 )
 					{
 						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
@@ -168,6 +184,7 @@ void Graph::resolveCrossedConnections()
 						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
 						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
 					}
+					*/
 				}
 			}
 		}
@@ -345,4 +362,34 @@ void Graph::resetCurve( Node* currentNode, Node* currentNeighbor ) const
 		while( nextNeighbor == currentNode );
 		resetCurve( currentNeighbor, nextNeighbor );
 	} 
+}
+
+int Graph::getIslandWeight( Node* posCurrentNode, Node* posNeighborNode, Node* negCurrentNode, Node* negNeighborNode )
+{
+	int positiveWeight = 0;
+	int negativeWeight = 0;
+
+	if( posCurrentNode->getNeighborCount() == 1 )
+	{
+		positiveWeight += 5;
+	}
+
+	if( posNeighborNode->getNeighborCount() == 1 )
+	{
+		positiveWeight += 5;
+	}
+
+	if( negCurrentNode->getNeighborCount() == 1 )
+	{
+		negativeWeight += 5;
+	}
+
+	if( negNeighborNode->getNeighborCount() == 1 )
+	{
+		negativeWeight += 5;
+	}
+
+	int totalIslandWeight = positiveWeight - negativeWeight;
+
+	return totalIslandWeight;
 }
