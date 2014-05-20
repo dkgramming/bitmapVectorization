@@ -28,6 +28,6 @@ private:
 	bool isOnLeft( int ) const;
 	bool isOnRight( int ) const;
 	const Coordinate getOffsetAt( NeighborDirection ) const;
-	int traverseCurve( Node*, Node* );
-	void resetCurve( Node*, Node* );
+	int traverseCurve( Node*, Node* ) const;
+	void resetCurve( Node*, Node* ) const;
 };

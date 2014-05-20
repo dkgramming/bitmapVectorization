@@ -120,6 +120,7 @@ void Graph::resolveCrossedConnections()
 
 			if( isCrossed )
 			{
+				cout << "Y = " << ( y + 1 ) << " Height = " << height << endl;
 				Node* pBottomNode = pNodes[ x ][ y + 1 ];
 
 				// Check for verticals and horizontals around cross
@@ -150,11 +151,24 @@ void Graph::resolveCrossedConnections()
 				{
 					Node* pBottomRightNode = pNodes[ x + 1 ][ y + 1 ];
 
-					traverseCurve( pCurrentNode, pBottomRightNode );
+					int positiveCurveLength = traverseCurve( pCurrentNode, pBottomRightNode );
 					resetCurve( pCurrentNode, pBottomRightNode );
 
-					traverseCurve( pRightNode, pBottomNode );
+					int negativeCurveLength = ( -1 * traverseCurve( pRightNode, pBottomNode ) );
 					resetCurve( pRightNode, pBottomNode );
+
+					int curveWeight = positiveCurveLength + negativeCurveLength;
+					
+					if( curveWeight < 0 )
+					{
+						pCurrentNode->severConnection( NeighborDirection::BOTTOM_RIGHT );
+						pBottomRightNode->severConnection( NeighborDirection::TOP_LEFT );
+					}
+					else
+					{
+						pRightNode->severConnection( NeighborDirection::BOTTOM_LEFT );
+						pBottomNode->severConnection( NeighborDirection::TOP_RIGHT );
+					}
 				}
 			}
 		}
@@ -243,7 +257,7 @@ void Graph::print() const
 	cin >> input;
 }
 
-int Graph::traverseCurve( Node* currentNode, Node* currentNeighbor )
+int Graph::traverseCurve( Node* currentNode, Node* currentNeighbor ) const
 {
 	int length = 0;
 
@@ -259,7 +273,7 @@ int Graph::traverseCurve( Node* currentNode, Node* currentNeighbor )
 		{
 			nextNeighborOffset = currentNode->getNextNeighbor( nextOffsetIndex );
 			int nextNeighborX = currentNode->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = currentNode->getY() + nextNeighborOffset.getX();
+			int nextNeighborY = currentNode->getY() + nextNeighborOffset.getY();
 			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
 			++nextOffsetIndex;
 		}
@@ -279,17 +293,57 @@ int Graph::traverseCurve( Node* currentNode, Node* currentNeighbor )
 		{
 			nextNeighborOffset = currentNeighbor->getNextNeighbor( nextOffsetIndex );
 			int nextNeighborX = currentNeighbor->getX() + nextNeighborOffset.getX();
-			int nextNeighborY = currentNeighbor->getY() + nextNeighborOffset.getX();
+			int nextNeighborY = currentNeighbor->getY() + nextNeighborOffset.getY();
 			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
 			++nextOffsetIndex;
 		}
-		while( currentNeighbor == nextNeighbor );
+		while( nextNeighbor == currentNode );
 		length += traverseCurve( currentNeighbor, nextNeighbor );
 	}
 
 	return length + 1;
 }
 
-void Graph::resetCurve( Node* currentNode, Node* currentNeighbor )
+void Graph::resetCurve( Node* currentNode, Node* currentNeighbor ) const
 {
+	if( currentNode->getNeighborCount() == 2 && currentNode->getTraversed() )
+	{
+		currentNode->setTraversal( false );
+
+		int nextOffsetIndex = 0;
+		Coordinate nextNeighborOffset;
+		Node* nextNeighbor;
+
+		do
+		{
+			nextNeighborOffset = currentNode->getNextNeighbor( nextOffsetIndex );
+			int nextNeighborX = currentNode->getX() + nextNeighborOffset.getX();
+			int nextNeighborY = currentNode->getY() + nextNeighborOffset.getY();
+			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
+			++nextOffsetIndex;
+		}
+		while( nextNeighbor == currentNeighbor );
+
+		resetCurve(nextNeighbor, currentNode );
+	}
+
+	if( currentNeighbor->getNeighborCount() == 2 && currentNeighbor->getTraversed() )
+	{
+		currentNeighbor->setTraversal( false );
+
+		int nextOffsetIndex = 0;
+		Coordinate nextNeighborOffset;
+		Node* nextNeighbor;
+
+		do
+		{
+			nextNeighborOffset = currentNeighbor->getNextNeighbor( nextOffsetIndex );
+			int nextNeighborX = currentNeighbor->getX() + nextNeighborOffset.getX();
+			int nextNeighborY = currentNeighbor->getY() + nextNeighborOffset.getY();
+			nextNeighbor = pNodes[ nextNeighborX ][ nextNeighborY ];
+			++nextOffsetIndex;
+		}
+		while( nextNeighbor == currentNode );
+		resetCurve( currentNeighbor, nextNeighbor );
+	} 
 }
